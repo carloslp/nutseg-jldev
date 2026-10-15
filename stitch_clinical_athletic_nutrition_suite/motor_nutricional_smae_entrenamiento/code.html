@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-background":"#131b2e","primary":"#00685f","on-tertiary-fixed":"#25005a","on-secondary-container":"#fffbff","tertiary-fixed-dim":"#d2bbff","on-surface-variant":"#3d4947","tertiary-container":"#8a4cfc","on-secondary-fixed-variant":"#3323cc","surface-container":"#eaedff","on-error-container":"#93000a","on-tertiary-fixed-variant":"#5a00c6","surface-container-low":"#f2f3ff","on-error":"#ffffff","inverse-primary":"#6bd8cb","on-primary-container":"#f4fffc","on-tertiary-container":"#fffbff","on-tertiary":"#ffffff","error":"#ba1a1a","secondary-fixed":"#e2dfff","surface":"#faf8ff","error-container":"#ffdad6","surface-variant":"#dae2fd","surface-container-high":"#e2e7ff","inverse-on-surface":"#eef0ff","secondary":"#4b41e1","background":"#faf8ff","surface-dim":"#d2d9f4","outline-variant":"#bcc9c6","on-primary-fixed-variant":"#005049","surface-container-highest":"#dae2fd","tertiary":"#712ae2","primary-container":"#008378","on-primary":"#ffffff","secondary-fixed-dim":"#c3c0ff","tertiary-fixed":"#eaddff","primary-fixed":"#89f5e7","surface-bright":"#faf8ff","on-primary-fixed":"#00201d","surface-tint":"#006a61","on-surface":"#131b2e","inverse-surface":"#283044","on-secondary":"#ffffff","outline":"#6d7a77","secondary-container":"#645efb","on-secondary-fixed":"#0f0069","primary-fixed-dim":"#6bd8cb","surface-container-lowest":"#ffffff"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"margin-desktop":"2rem",gutter:"1rem","space-xl":"2rem","space-md":"1rem","gutter-desktop":"1.5rem","space-2xl":"3rem","space-sm":"0.75rem","space-xxs":"0.25rem","margin-tablet":"1.5rem",margin:"1rem","space-lg":"1.5rem","space-xs":"0.5rem"},fontFamily:{"data-metric":["Geist"],"label-sm":["Geist"],"body-sm":["Inter"],"body-sm-medium":["Inter"],"label-md":["Geist"],"title-sm":["Inter"],"data-table":["Inter"],"headline-lg":["Geist"],"display-lg-mobile":["Geist"],"display-lg":["Geist"],"body-md":["Inter"],"headline-md":["Geist"]},fontSize:{"data-metric":["20px",{lineHeight:"24px",letterSpacing:"-0.02em",fontWeight:"600"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}],"body-sm":["14px",{lineHeight:"20px",fontWeight:"400"}],"body-sm-medium":["14px",{lineHeight:"20px",fontWeight:"500"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"500"}],"title-sm":["16px",{lineHeight:"22px",letterSpacing:"-0.005em",fontWeight:"600"}],"data-table":["13px",{lineHeight:"18px",fontWeight:"400"}],"headline-lg":["24px",{lineHeight:"30px",letterSpacing:"-0.015em",fontWeight:"600"}],"display-lg-mobile":["26px",{lineHeight:"32px",letterSpacing:"-0.015em",fontWeight:"600"}],"display-lg":["32px",{lineHeight:"38px",letterSpacing:"-0.02em",fontWeight:"600"}],"body-md":["16px",{lineHeight:"24px",fontWeight:"400"}],"headline-md":["20px",{lineHeight:"26px",letterSpacing:"-0.01em",fontWeight:"600"}]}}}};</script></head><body class="bg-background font-body-sm text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 flex items-center px-space-lg gap-space-xs bg-surface-container-lowest"><img alt="Biometrix Clinical Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UjwN7ufth8NoMPhg9mYUk-UJrj_gzTrtYH8WJRAkewEcqrpv0SuC8icSP8iWylqiPF4xNbAVFNXTkXkTNXSSVvE1UnKOjjaIklAROijYrZB0lkUDWVTNMkbSqFuNBGuI_kpdDYTkOcpFv6OzotzbyKsQM2CiDpSVgFH5sqItKg-83PUdBeq4nMfQ3LYK3X6stmd3IKRy8MV0cmVnUO03oJh5pqBgr3pJ8a5B5N74vyRljsmYz1qVoCeW4"/><div class="flex flex-col"><span class="font-headline-md text-title-sm text-on-surface leading-tight">BioMetrix Pro</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-none">Clinical Sports Nutrition</span></div></div><div class="px-space-md py-space-sm"><div class="px-space-sm py-space-xxs bg-surface-container rounded-lg flex items-center justify-between"><span class="font-label-sm text-label-sm text-primary font-semibold">Panel Clínico v2.4</span><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span></div></div><nav class="flex flex-col gap-space-xxs px-space-md mt-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a class="flex items-center gap-space-sm px-space-sm py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors" data-path="expediente-y-biometria" href="#"><span class="material-symbols-outlined text-[20px]">vital_signs</span><span class="font-body-sm-medium text-body-sm-medium">Expediente &amp; Biometría</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors" data-path="motor-nutricional-y-smae" href="#"><span class="material-symbols-outlined text-[20px]">calculate</span><span class="font-body-sm-medium text-body-sm-medium">Motor Nutricional &amp; SMAE</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors" data-path="entrenamiento-y-periodizacion" href="#"><span class="material-symbols-outlined text-[20px]">fitness_center</span><span class="font-body-sm-medium text-body-sm-medium">Entrenamiento &amp; Periodización</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded-lg transition-colors" data-path="permalinks-y-pacientes" href="#"><span class="material-symbols-outlined text-[20px]">groups</span><span class="font-body-sm-medium text-body-sm-medium">Permalinks &amp; Pacientes</span></a></nav></div><div class="p-space-md bg-surface-container-lowest"><div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col gap-space-xxs"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Unidad Biomecánica</span><span class="font-body-sm-medium text-body-sm text-on-surface">Sede Central — L-4</span><div class="flex items-center gap-space-xxs mt-space-xxs"><span class="material-symbols-outlined text-primary text-[16px]">verified</span><span class="font-label-sm text-label-sm text-primary">Certificado Antidopaje</span></div></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center px-space-lg"><div class="w-full max-w-[1440px] mx-auto flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm flex-1 max-w-lg"><div class="relative w-full flex items-center"><span class="material-symbols-outlined absolute left-space-sm text-on-surface-variant text-[20px]">search</span><input class="w-full pl-10 pr-14 py-space-xs bg-surface-container-low text-on-surface rounded-lg font-body-sm text-body-sm placeholder:text-on-surface-variant/70 focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Buscar paciente por nombre, ID o CURP..." type="text"/><div class="absolute right-space-sm px-space-xxs py-0.5 bg-surface-container-highest rounded text-on-surface-variant font-label-sm text-label-sm tracking-wide">⌘K</div></div></div><div class="flex items-center gap-space-md"><div class="hidden xl:flex items-center gap-space-xs bg-surface-container-low px-space-sm py-space-xs rounded-lg cursor-pointer hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-primary text-[20px]">stethoscope</span><div class="flex flex-col text-left"><span class="font-body-sm-medium text-body-sm-medium text-on-surface leading-tight">Dr. Alejandro Valdés</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-none">Sede Central / Medicina Deportiva</span></div><span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span></div><button class="relative p-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><button class="flex items-center gap-space-xxs bg-primary text-on-primary font-body-sm-medium text-body-sm px-space-md py-space-xs rounded-lg shadow-sm hover:bg-primary-container transition-all active:scale-[0.99]"><span class="material-symbols-outlined text-[18px]">add</span><span>Nuevo Paciente</span></button><div class="relative flex items-center"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-primary ring-2 ring-surface-container-lowest"></span></div></div></div></header><div class="fixed top-16 left-64 right-0 h-12 bg-surface-container-lowest shadow-[0_1px_4px_rgba(0,0,0,0.02)] z-30 flex items-center px-space-lg"><div class="w-full max-w-[1440px] mx-auto"><nav class="flex items-center gap-space-lg h-12" data-active-classes="text-primary font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary"><a class="relative h-full flex items-center font-body-sm-medium text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="expediente-y-biometria" href="#">Expediente &amp; Biometría</a><a class="relative h-full flex items-center font-body-sm-medium text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="motor-nutricional-y-smae" href="#">Motor Nutricional &amp; SMAE</a><a class="relative h-full flex items-center font-body-sm-medium text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="entrenamiento-y-periodizacion" href="#">Entrenamiento &amp; Periodización</a><a class="relative h-full flex items-center font-body-sm-medium text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="permalinks-y-pacientes" href="#">Permalinks &amp; Pacientes</a></nav></div></div><main class="relative pt-28 bg-surface w-full flex-1"><div class="flex flex-col w-full">
+<div class="w-full max-w-[1520px] mx-auto px-space-md lg:px-space-xl py-space-md flex flex-col gap-space-lg pb-28">
+<!-- Paciente en Contexto Activo: Sub-Header Píldora Médica -->
+<section class="w-full bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-md">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-md text-headline-md shadow-sm">
+            CM
+          </div>
+<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-primary ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-headline-md text-headline-md text-on-surface">Carlos Mendoza Silva</span>
+<span class="px-space-xs py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">#BIO-9942</span>
+<span class="px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">flag</span> Recomposición Activa
+            </span>
+</div>
+<div class="flex items-center gap-space-md mt-1 text-on-surface-variant font-data-table text-data-table flex-wrap">
+<span>Edad: <strong class="text-on-surface font-body-sm-medium">31 a</strong></span>
+<span>Peso: <strong class="text-on-surface font-body-sm-medium">84.3 kg</strong></span>
+<span>MLG: <strong class="text-on-surface font-body-sm-medium">68.8 kg (ISAK 2)</strong></span>
+<span>Grasa: <strong class="text-on-surface font-body-sm-medium">18.4%</strong></span>
+<span>Talla: <strong class="text-on-surface font-body-sm-medium">1.79 m</strong></span>
+</div>
+</div>
+</div>
+<!-- Alerta médica inline -->
+<div class="flex items-center gap-space-sm bg-surface-container-low px-space-md py-space-xs rounded-lg max-w-xl">
+<span class="material-symbols-outlined text-tertiary text-[20px] shrink-0">shield_with_heart</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider">Restricción Proteica Activa</span>
+<span class="font-body-sm text-body-sm text-on-surface">Proteína máx ≤ 2.0 g/kg (Sensibilidad renal transitoria / Hx glucémico)</span>
+</div>
+</div>
+</section>
+<!-- Calculation Engine: Barra Superior de Motor Metabólico -->
+<section class="w-full bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-sm pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">developer_board</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Motor de Telemetría Metabólica</h2>
+<span class="px-space-xs py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm">v2.4 Algorítmico</span>
+</div>
+<!-- Formula Toggle -->
+<div class="flex items-center bg-surface-container-low p-1 rounded-lg">
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest text-primary font-body-sm-medium text-body-sm shadow-sm flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+            Katch-McArdle [MLG: 68.8 kg]
+            <span class="font-label-sm text-[10px] text-primary-container px-1 rounded bg-primary-fixed">ISAK Gold</span>
+</button>
+<button class="px-space-sm py-1 text-on-surface-variant font-body-sm text-body-sm hover:text-on-surface transition-colors">
+            Mifflin-St Jeor [RMR]
+          </button>
+</div>
+</div>
+<!-- Telemetría Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-sm">
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">TMB Base Calculada</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-data-metric text-data-metric text-on-surface">1,845</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">kcal/d</span>
+</div>
+<span class="font-label-sm text-[11px] text-outline mt-1">370 + (21.6 × 68.8 kg MLG)</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Factor FAF Aplicado</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-data-metric text-data-metric text-primary">1.55</span>
+<span class="font-label-sm text-label-sm text-primary">Moderado-Alto</span>
+</div>
+<span class="font-label-sm text-[11px] text-outline mt-1">4-5 días fuerza + 8k pasos</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">GETD Base Teórico</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-data-metric text-data-metric text-on-surface">2,860</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">kcal/d</span>
+</div>
+<span class="font-label-sm text-[11px] text-outline mt-1">Gasto Energético Diario Total</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Suelo Calórico Clínico</span>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="px-space-xs py-1 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified_user</span> Seguro: Mín 1,600 kcal
+            </span>
+</div>
+<span class="font-label-sm text-[11px] text-primary mt-1">Margen seguro: +831 kcal</span>
+</div>
+</div>
+<!-- Segmented Deficit / Surplus Target Bar -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">tune</span>
+<span class="font-body-sm-medium text-body-sm-medium text-on-surface">Prescripción Calórica Activa:</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-xs w-full md:w-auto">
+<button class="px-space-sm py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-high transition-colors text-center">
+            Déficit -20% <span class="font-label-sm text-[10px] block opacity-80">(2,288 kcal)</span>
+</button>
+<button class="px-space-sm py-1.5 rounded-lg bg-primary text-on-primary font-body-sm-medium text-body-sm text-center shadow-sm">
+            Déficit -15% <span class="font-label-sm text-[10px] block text-on-primary-container">(2,431 kcal/d)</span>
+</button>
+<button class="px-space-sm py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-high transition-colors text-center">
+            Mantenimiento <span class="font-label-sm text-[10px] block opacity-80">(2,860 kcal)</span>
+</button>
+<button class="px-space-sm py-1.5 rounded-lg bg-surface-container text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-high transition-colors text-center">
+            Superávit +10% <span class="font-label-sm text-[10px] block opacity-80">(3,146 kcal)</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Macro Prescription & Clinical Correction Panel -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- Visual Macro Control (Col 8) -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-xs">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Distribución de Macronutrientes</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Calibrado con peso magro según composición ISAK 2</span>
+</div>
+<!-- Manual Override Chip -->
+<div class="flex items-center gap-1.5 px-space-xs py-1 rounded bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+            Ajuste Clínico con Bloqueo Manual
+          </div>
+</div>
+<!-- Banner de Corrección Clínica -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0">clinical_notes</span>
+<p class="font-body-sm text-body-sm text-on-surface">
+<strong class="font-body-sm-medium text-on-surface">Ajuste Clínico Activo:</strong> Paciente con restricción proteica moderada. Proteína limitada a <strong class="font-body-sm-medium text-primary">1.9 g/kg peso magro</strong> (160 g / 640 kcal) para preservar homeostasis renal.
+          </p>
+</div>
+<!-- 3 Macro Sliders / Numeric Controls -->
+<div class="flex flex-col gap-space-sm mt-1">
+<!-- Proteína -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center justify-between flex-wrap gap-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="font-body-sm-medium text-body-sm-medium text-on-surface">Proteína Total</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-tertiary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">lock</span> 1.9 g/kg MLG
+                </span>
+</div>
+<div class="flex items-center gap-space-xs font-data-metric text-title-sm text-on-surface">
+<span>160 g</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-normal">(640 kcal · 26.3%)</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 26.3%"></div>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm">
+<span>Rango sugerido: 1.6 - 2.0 g/kg MLG</span>
+<span class="text-tertiary font-semibold">Techo clínico: 168 g máx</span>
+</div>
+</div>
+<!-- Grasas -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center justify-between flex-wrap gap-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="font-body-sm-medium text-body-sm-medium text-on-surface">Grasas Lipídicas</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+                  0.9 g/kg Peso Total
+                </span>
+</div>
+<div class="flex items-center gap-space-xs font-data-metric text-title-sm text-on-surface">
+<span>76 g</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-normal">(684 kcal · 28.1%)</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 28.1%"></div>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm">
+<span>Soporte hormonal androgénico</span>
+<span>Mínimo 0.8 g/kg</span>
+</div>
+</div>
+<!-- Carbohidratos -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center justify-between flex-wrap gap-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary-container"></span>
+<span class="font-body-sm-medium text-body-sm-medium text-on-surface">Carbohidratos Complejos</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+                  Aporte Restante Adaptativo
+                </span>
+</div>
+<div class="flex items-center gap-space-xs font-data-metric text-title-sm text-on-surface">
+<span>277 g</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-normal">(1,107 kcal · 45.6%)</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full rounded-full" style="width: 45.6%"></div>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm">
+<span>Rendimiento glucolítico anaeróbico</span>
+<span>3.3 g/kg total</span>
+</div>
+</div>
+</div>
+<!-- Continuous Segmented Tricolor Bar -->
+<div class="flex flex-col gap-1.5 mt-2 pt-space-xs">
+<div class="flex items-center justify-between text-on-surface font-label-sm text-label-sm">
+<span>Suma Calórica Total: <strong class="font-headline-md text-body-sm-medium text-primary">2,431 kcal</strong> (100% Cubierto)</span>
+<span class="text-primary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span> Tolerancia: ±35 kcal (Desvío 0 kcal)
+            </span>
+</div>
+<div class="h-3.5 w-full bg-surface-container-high rounded-full overflow-hidden flex">
+<div class="bg-secondary h-full" style="width: 26.3%"></div>
+<div class="bg-primary h-full" style="width: 28.1%"></div>
+<div class="bg-secondary-container h-full" style="width: 45.6%"></div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-[11px]">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span> Proteína 26.3%</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span> Lípidos 28.1%</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary-container"></span> Carbos 45.6%</span>
+</div>
+</div>
+</div>
+<!-- Donut Chart & Clinical Telemetry Mini-Panel (Col 4) -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-md text-title-sm text-on-surface">Proporción Calórica</h4>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">pie_chart</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Balance de macronutrientes</span>
+<!-- Inline Donut SVG Chart -->
+<div class="relative w-44 h-44 mx-auto my-4 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<!-- Background Ring -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#f2f3ff" stroke-width="12"></circle>
+<!-- Carbohidratos (45.6%) -> 251.3 * 0.456 = 114.6 -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#645efb" stroke-dasharray="114.6 251.3" stroke-dashoffset="0" stroke-width="12"></circle>
+<!-- Grasas (28.1%) -> 251.3 * 0.281 = 70.6 -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#00685f" stroke-dasharray="70.6 251.3" stroke-dashoffset="-114.6" stroke-width="12"></circle>
+<!-- Proteína (26.3%) -> 251.3 * 0.263 = 66.1 -->
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#4b41e1" stroke-dasharray="66.1 251.3" stroke-dashoffset="-185.2" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+<span class="font-headline-md text-data-metric text-on-surface">2,431</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">KCAL / DÍA</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between text-on-surface font-body-sm text-body-sm">
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-secondary"></span> Proteína</span>
+<span class="font-body-sm-medium">640 kcal</span>
+</div>
+<div class="flex items-center justify-between text-on-surface font-body-sm text-body-sm">
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-primary"></span> Lípidos</span>
+<span class="font-body-sm-medium">684 kcal</span>
+</div>
+<div class="flex items-center justify-between text-on-surface font-body-sm text-body-sm">
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-secondary-container"></span> Carbohidratos</span>
+<span class="font-body-sm-medium">1,107 kcal</span>
+</div>
+</div>
+</div>
+<!-- Quick Info Card -->
+<div class="p-space-sm bg-surface-container rounded-lg flex flex-col gap-1">
+<div class="flex items-center gap-1 text-primary font-body-sm-medium text-body-sm">
+<span class="material-symbols-outlined text-[18px]">water_drop</span> Hidratación Óptima
+          </div>
+<span class="font-headline-md text-title-sm text-on-surface">3.4 Litros / día</span>
+<span class="font-label-sm text-[11px] text-on-surface-variant">40 ml/kg + reposición hídrica por sudoración</span>
+</div>
+</div>
+</section>
+<!-- Meal Allocation & SMAE Technical Equivalents Table -->
+<section class="w-full bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col gap-space-md">
+<!-- Top Section Control Bar -->
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md pb-space-xs">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[24px]">dataset</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Cuadrícula de Equivalentes SMAE &amp; Distribución</h3>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Sistema Mexicano de Alimentos Equivalentes para Deporte</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-sm">
+<!-- Meal split selector -->
+<div class="flex items-center bg-surface-container-low p-1 rounded-lg">
+<button class="px-space-sm py-1 rounded text-on-surface-variant font-body-sm text-body-sm hover:text-on-surface">3 Comidas</button>
+<button class="px-space-sm py-1 rounded bg-surface-container-lowest text-primary font-body-sm-medium text-body-sm shadow-sm">4 Comidas (Activo)</button>
+<button class="px-space-sm py-1 rounded text-on-surface-variant font-body-sm text-body-sm hover:text-on-surface">5 Comidas</button>
+</div>
+<!-- Allergen Filter Badge -->
+<div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">check_circle</span> 0 Alérgenos · Sin Lactosa
+          </div>
+</div>
+</div>
+<!-- Technical SMAE Matrix Table -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left font-data-table text-data-table border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-space-sm px-space-sm rounded-l-lg">Grupo SMAE</th>
+<th class="py-space-sm px-space-xs text-center">Aporte U.</th>
+<th class="py-space-sm px-space-xs text-center">Desayuno</th>
+<th class="py-space-sm px-space-xs text-center">Almuerzo</th>
+<th class="py-space-sm px-space-xs text-center">Merienda</th>
+<th class="py-space-sm px-space-xs text-center">Cena</th>
+<th class="py-space-sm px-space-xs text-center">Total Asig.</th>
+<th class="py-space-sm px-space-xs text-center">Meta Rec.</th>
+<th class="py-space-sm px-space-sm rounded-r-lg text-center">Delta</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Verduras -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-xs px-space-sm font-body-sm-medium text-body-sm text-on-surface">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+                  Verduras libres
+                </div>
+</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">25 kcal</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">1</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">2</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">0</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">2</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center font-body-sm-medium text-body-sm text-on-surface">5.0</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">5.0</td>
+<td class="py-space-xs px-space-sm text-center">
+<span class="px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">0.0</span>
+</td>
+</tr>
+<!-- Frutas -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-xs px-space-sm font-body-sm-medium text-body-sm text-on-surface">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container"></span>
+                  Frutas frescas
+                </div>
+</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">60 kcal</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">1</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">1</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">2</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">0</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center font-body-sm-medium text-body-sm text-on-surface">4.0</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">4.0</td>
+<td class="py-space-xs px-space-sm text-center">
+<span class="px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">0.0</span>
+</td>
+</tr>
+<!-- Cereales sin grasa -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-xs px-space-sm font-body-sm-medium text-body-sm text-on-surface">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+                  Cereales sin grasa (Avena/Arroz)
+                </div>
+</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">70 kcal</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">2</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">3</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">1</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">2</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center font-body-sm-medium text-body-sm text-on-surface">8.0</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">8.0</td>
+<td class="py-space-xs px-space-sm text-center">
+<span class="px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">0.0</span>
+</td>
+</tr>
+<!-- Leguminosas -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-xs px-space-sm font-body-sm-medium text-body-sm text-on-surface">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container"></span>
+                  Leguminosas (Lenteja/Frijol)
+                </div>
+</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">120 kcal</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">0</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">1</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">0</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">1</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center font-body-sm-medium text-body-sm text-on-surface">2.0</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">2.0</td>
+<td class="py-space-xs px-space-sm text-center">
+<span class="px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">0.0</span>
+</td>
+</tr>
+<!-- AOA Muy Bajo / Bajo aporte graso -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-xs px-space-sm font-body-sm-medium text-body-sm text-on-surface">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+                  AOA Muy Bajo/Bajo aporte (Pollo/Atún/Claras)
+                </div>
+</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">45-55 kcal</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">2</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">3</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">1</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">2</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center font-body-sm-medium text-body-sm text-on-surface">8.0</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">8.0</td>
+<td class="py-space-xs px-space-sm text-center">
+<span class="px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">0.0</span>
+</td>
+</tr>
+<!-- Grasas mono/poliinsaturadas sin proteína -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-xs px-space-sm font-body-sm-medium text-body-sm text-on-surface">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+                  Grasas sin proteína (Aceite de Oliva/Aguacate)
+                </div>
+</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">45 kcal</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">1</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">2</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">0</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">1</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center font-body-sm-medium text-body-sm text-on-surface">4.0</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">4.0</td>
+<td class="py-space-xs px-space-sm text-center">
+<span class="px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">0.0</span>
+</td>
+</tr>
+<!-- Grasas con proteína -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-xs px-space-sm font-body-sm-medium text-body-sm text-on-surface">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+                  Grasas con proteína (Almendras/Nueces)
+                </div>
+</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">70 kcal</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">0</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">0</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">2</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center">
+<div class="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded">
+<span class="font-data-table font-semibold text-on-surface">0</span>
+</div>
+</td>
+<td class="py-space-xs px-space-xs text-center font-body-sm-medium text-body-sm text-on-surface">2.0</td>
+<td class="py-space-xs px-space-xs text-center text-on-surface-variant">2.0</td>
+<td class="py-space-xs px-space-sm text-center">
+<span class="px-space-xs py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">0.0</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Meal Distribution Summary Chips -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-sm pt-space-xs">
+<div class="p-space-xs bg-surface-container-low rounded-lg flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface">Desayuno:</span>
+<span class="font-body-sm-medium text-primary">540 kcal</span>
+</div>
+<div class="p-space-xs bg-surface-container-low rounded-lg flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface">Almuerzo:</span>
+<span class="font-body-sm-medium text-primary">820 kcal</span>
+</div>
+<div class="p-space-xs bg-surface-container-low rounded-lg flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface">Merienda:</span>
+<span class="font-body-sm-medium text-primary">430 kcal</span>
+</div>
+<div class="p-space-xs bg-surface-container-low rounded-lg flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface">Cena:</span>
+<span class="font-body-sm-medium text-primary">641 kcal</span>
+</div>
+</div>
+</section>
+<!-- Workout Split & Movement Decision Tree -->
+<section class="w-full bg-surface-container-lowest rounded-xl p-space-md lg:p-space-lg shadow-sm flex flex-col gap-space-md">
+<!-- Header split & biomechanical caution -->
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[24px]">fitness_center</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Periodización &amp; Árbol Biomecánico de Movimiento</h3>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Split programado: 4 Días Upper / Lower (Recomposición + Protección Articular)</span>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-high text-on-surface px-space-md py-space-xs rounded-lg max-w-md">
+<span class="material-symbols-outlined text-tertiary text-[20px] shrink-0">warning</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase text-tertiary">Precaución Biomecánica Activa</span>
+<span class="font-data-table text-data-table">Evitar flexión profunda de rodilla &gt;90° en cadena cinética cerrada (Tendón rotuliano derecho).</span>
+</div>
+</div>
+</div>
+<!-- Movement Patterns Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Pattern 1: Empuje Horizontal -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col justify-between gap-space-sm hover:shadow-sm transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Patrón: Empuje Horizontal</span>
+<h4 class="font-headline-md text-title-sm text-on-surface mt-0.5">Press de Banca con Mancuernas</h4>
+<div class="flex items-center gap-space-xs mt-1">
+<span class="px-space-xs py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">
+                  4 Series × 8-10 Reps
+                </span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+                  RIR 2 · Rest 90s
+                </span>
+</div>
+</div>
+<span class="px-space-xs py-1 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check</span> Seguro
+            </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-data-table text-data-table">
+<span class="material-symbols-outlined text-[16px]">sports_gymnastics</span> Banco Plano + Mancuernas 28 kg
+            </div>
+<button class="px-space-xs py-1 rounded bg-surface-container-highest text-on-surface font-body-sm text-body-sm hover:bg-surface-container transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">swap_horiz</span> Reemplazar
+            </button>
+</div>
+</div>
+<!-- Pattern 2: Tracción Vertical -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col justify-between gap-space-sm hover:shadow-sm transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Patrón: Tracción Vertical</span>
+<h4 class="font-headline-md text-title-sm text-on-surface mt-0.5">Jalón al Pecho Agarre Neutro</h4>
+<div class="flex items-center gap-space-xs mt-1">
+<span class="px-space-xs py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">
+                  4 Series × 10-12 Reps
+                </span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+                  RIR 1-2 · Rest 75s
+                </span>
+</div>
+</div>
+<span class="px-space-xs py-1 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check</span> Seguro
+            </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-data-table text-data-table">
+<span class="material-symbols-outlined text-[16px]">cable</span> Polea Alta + Agarre V
+            </div>
+<button class="px-space-xs py-1 rounded bg-surface-container-highest text-on-surface font-body-sm text-body-sm hover:bg-surface-container transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">swap_horiz</span> Reemplazar
+            </button>
+</div>
+</div>
+<!-- Pattern 3: Dominante de Cadera (Seguro Tendón) -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col justify-between gap-space-sm hover:shadow-sm transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Patrón: Dominante Cadera (Rodilla Protegida)</span>
+<h4 class="font-headline-md text-title-sm text-on-surface mt-0.5">Peso Muerto Rumano con Mancuernas</h4>
+<div class="flex items-center gap-space-xs mt-1">
+<span class="px-space-xs py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">
+                  4 Series × 10 Reps
+                </span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+                  RIR 2 · Flexión Rodilla ≤20°
+                </span>
+</div>
+</div>
+<span class="px-space-xs py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">security</span> Protocolo Rotuliano
+            </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-data-table text-data-table">
+<span class="material-symbols-outlined text-[16px]">fitness_center</span> Mancuernas 32 kg c/u
+            </div>
+<button class="px-space-xs py-1 rounded bg-surface-container-highest text-on-surface font-body-sm text-body-sm hover:bg-surface-container transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">swap_horiz</span> Reemplazar
+            </button>
+</div>
+</div>
+<!-- Pattern 4: Core / Anti-Extensión -->
+<div class="p-space-md bg-surface-container-low rounded-xl flex flex-col justify-between gap-space-sm hover:shadow-sm transition-shadow">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Patrón: Estabilidad Lumbo-Pélvica</span>
+<h4 class="font-headline-md text-title-sm text-on-surface mt-0.5">Superserie: Plancha RKC + Deadbug</h4>
+<div class="flex items-center gap-space-xs mt-1">
+<span class="px-space-xs py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm">
+                  3 Series × 45s / 12 reps
+                </span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+                  Control Anti-Extensión
+                </span>
+</div>
+</div>
+<span class="px-space-xs py-1 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check</span> Seguro
+            </span>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-data-table text-data-table">
+<span class="material-symbols-outlined text-[16px]">accessibility_new</span> Peso corporal + Banda elástica
+            </div>
+<button class="px-space-xs py-1 rounded bg-surface-container-highest text-on-surface font-body-sm text-body-sm hover:bg-surface-container transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">swap_horiz</span> Reemplazar
+            </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Sticky Clinical Action Bar (Bottom Floating Dock) -->
+<footer class="fixed bottom-0 left-64 right-0 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_-4px_16px_rgba(0,0,0,0.06)] z-40 py-space-sm px-space-md lg:px-space-xl">
+<div class="w-full max-w-[1520px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<!-- Versioning status & Auto-recalc switch -->
+<div class="flex items-center gap-space-md flex-wrap">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-body-sm-medium text-body-sm text-on-surface">Borrador v2.4</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">· Guardado automático hace 2 min</span>
+</div>
+<div class="hidden md:flex items-center gap-2 px-space-sm py-1 bg-surface-container-low rounded-lg">
+<input class="w-4 h-4 rounded text-primary focus:ring-primary accent-primary cursor-pointer" id="lock-recalc" type="checkbox"/>
+<label class="font-label-sm text-label-sm text-on-surface cursor-pointer select-none" for="lock-recalc">
+            Bloquear recálculo automático al editar
+          </label>
+</div>
+</div>
+<!-- Action buttons -->
+<div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
+<button class="flex items-center gap-1.5 px-space-md py-space-xs rounded-lg bg-surface-container-high hover:bg-surface-container text-on-surface font-body-sm-medium text-body-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+<span>Previsualizar Permalink</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-lg py-space-xs rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-sm-medium text-body-sm shadow-sm transition-all active:scale-[0.99]">
+<span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+<span>Guardar y Publicar en Permalink</span>
+</button>
+</div>
+</div>
+</footer>
+</div></main></div></body></html>

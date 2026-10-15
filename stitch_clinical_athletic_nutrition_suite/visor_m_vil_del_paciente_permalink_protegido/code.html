@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: 'class', theme: { extend: { colors: { 'surface-bright': '#faf8ff', 'surface-tint': '#006a61', 'on-tertiary-fixed': '#25005a', 'tertiary-fixed': '#eaddff', 'on-primary': '#ffffff', 'on-error': '#ffffff', 'surface-container-low': '#f2f3ff', 'on-secondary': '#ffffff', 'primary-container': '#008378', 'error-container': '#ffdad6', 'on-surface': '#131b2e', 'inverse-surface': '#283044', 'inverse-primary': '#6bd8cb', 'on-secondary-fixed': '#0f0069', 'surface-dim': '#d2d9f4', 'secondary-fixed-dim': '#c3c0ff', 'on-tertiary-fixed-variant': '#5a00c6', 'on-tertiary-container': '#fffbff', 'on-primary-fixed-variant': '#005049', 'on-primary-fixed': '#00201d', 'on-primary-container': '#f4fffc', 'on-surface-variant': '#3d4947', 'on-error-container': '#93000a', 'outline-variant': '#bcc9c6', 'secondary-container': '#645efb', 'on-secondary-fixed-variant': '#3323cc', 'tertiary-fixed-dim': '#d2bbff', 'outline': '#6d7a77', 'on-secondary-container': '#fffbff', 'primary': '#00685f', 'surface-variant': '#dae2fd', 'primary-fixed-dim': '#6bd8cb', 'surface-container-high': '#e2e7ff', 'inverse-on-surface': '#eef0ff', 'on-background': '#131b2e', 'surface': '#faf8ff', 'error': '#ba1a1a', 'tertiary-container': '#8a4cfc', 'background': '#faf8ff', 'primary-fixed': '#89f5e7', 'on-tertiary': '#ffffff', 'surface-container-highest': '#dae2fd', 'secondary': '#4b41e1', 'surface-container-lowest': '#ffffff', 'surface-container': '#eaedff', 'secondary-fixed': '#e2dfff', 'tertiary': '#712ae2' }, borderRadius: { 'DEFAULT': '0.25rem', 'lg': '0.5rem', 'xl': '0.75rem', 'full': '9999px' }, spacing: { 'space-xs': '0.5rem', 'gutter-desktop': '1.5rem', 'space-2xl': '3rem', 'space-sm': '0.75rem', 'space-xl': '2rem', 'space-xxs': '0.25rem', 'gutter': '1rem', 'margin-tablet': '1.5rem', 'margin-desktop': '2rem', 'space-lg': '1.5rem', 'space-md': '1rem', 'margin': '1rem' }, fontFamily: { 'data-table': ['Inter'], 'display-lg': ['Geist'], 'body-sm': ['Inter'], 'body-sm-medium': ['Inter'], 'headline-md': ['Geist'], 'body-md': ['Inter'], 'headline-lg': ['Geist'], 'display-lg-mobile': ['Geist'], 'title-sm': ['Inter'], 'label-md': ['Geist'], 'data-metric': ['Geist'], 'label-sm': ['Geist'] }, fontSize: { 'data-table': ['13px', { lineHeight: '18px', fontWeight: '400' }], 'display-lg': ['32px', { lineHeight: '38px', letterSpacing: '-0.02em', fontWeight: '600' }], 'body-sm': ['14px', { lineHeight: '20px', fontWeight: '400' }], 'body-sm-medium': ['14px', { lineHeight: '20px', fontWeight: '500' }], 'headline-md': ['20px', { lineHeight: '26px', letterSpacing: '-0.01em', fontWeight: '600' }], 'body-md': ['16px', { lineHeight: '24px', fontWeight: '400' }], 'headline-lg': ['24px', { lineHeight: '30px', letterSpacing: '-0.015em', fontWeight: '600' }], 'display-lg-mobile': ['26px', { lineHeight: '32px', letterSpacing: '-0.015em', fontWeight: '600' }], 'title-sm': ['16px', { lineHeight: '22px', letterSpacing: '-0.005em', fontWeight: '600' }], 'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.02em', fontWeight: '500' }], 'data-metric': ['20px', { lineHeight: '24px', letterSpacing: '-0.02em', fontWeight: '600' }], 'label-sm': ['11px', { lineHeight: '14px', letterSpacing: '0.04em', fontWeight: '600' }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style></head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="flex items-center justify-between px-margin h-16"><div class="flex items-center gap-space-xs"><div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-primary shadow-[0_1px_2px_rgba(0,0,0,0.02)]"><span class="material-symbols-outlined text-[15px]">lock</span><span class="font-label-sm text-label-sm tracking-wide uppercase text-primary font-semibold">256-Bit SSL</span></div><div class="h-4 w-px bg-outline-variant/30"></div><h1 class="font-title-sm text-title-sm text-on-surface font-semibold truncate max-w-[140px]">Patient Visor Summary</h1></div><div class="flex items-center gap-space-xs"><button aria-label="Print medical visor view" class="w-11 h-11 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">print</span></button><button aria-label="Switch patient or language" class="flex items-center gap-1.5 pl-2 pr-1 h-9 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant transition-colors"><span class="material-symbols-outlined text-[16px] text-primary">language</span><span class="font-label-sm text-label-sm font-medium">EN</span><span class="material-symbols-outlined text-[16px]">unfold_more</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface px-margin"><div class="flex flex-col w-full space-y-space-md print:space-y-4">
+<!-- Print Styles Injection via scoped inline styling -->
+<div class="hidden print:block mb-4 p-3 bg-surface-container-low rounded-lg text-on-surface">
+<div class="flex justify-between items-center text-label-sm font-label-sm text-outline">
+<span>BioMetrix Pro Clinical Intelligence · Permalink Protegido</span>
+<span>Expediente: #BMP-84920 · Carlos Mendoza Silva</span>
+</div>
+</div>
+<!-- 1. BANNER & ESTADO DE AUTENTICACIÓN SEGURA -->
+<section class="flex flex-col space-y-space-xs">
+<!-- Security Strip & Print Trigger -->
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high text-primary shadow-sm">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">TLS 1.3 Cifrado Activo</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant transition-colors" id="btn-toggle-pin" title="Verificar PIN">
+<span class="material-symbols-outlined text-[15px] text-tertiary">key</span>
+<span class="font-label-sm text-label-sm font-medium">PIN: ••• 482</span>
+</button>
+<button aria-label="Imprimir o Descargar PDF" class="flex items-center gap-1 px-3 py-1 rounded-lg bg-primary text-on-primary shadow-sm active:scale-95 transition-all" onclick="window.print()">
+<span class="material-symbols-outlined text-[15px]">picture_as_pdf</span>
+<span class="font-label-sm text-label-sm font-medium">PDF</span>
+</button>
+</div>
+</div>
+<!-- Interactive PIN Gate Mock Overlay (Collapsible) -->
+<div class="hidden flex-col p-4 bg-surface-container-lowest rounded-xl shadow-md border-0 transition-all" id="pin-vault-gate">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">lock_clock</span>
+<h3 class="font-headline-md text-title-sm text-on-surface font-semibold">Validación de Token Clínico</h3>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface" id="btn-close-pin">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">Introduce tu PIN de 6 dígitos emitido en consulta para desbloquear ajustes de micronutrición.</p>
+<div class="flex justify-between max-w-[280px] gap-2 mb-3">
+<input class="w-10 h-11 text-center font-display-lg-mobile text-data-metric bg-surface-container rounded-lg focus:outline-none focus:bg-surface-container-high text-on-surface font-semibold" maxlength="1" readonly="" type="text" value="8"/>
+<input class="w-10 h-11 text-center font-display-lg-mobile text-data-metric bg-surface-container rounded-lg focus:outline-none focus:bg-surface-container-high text-on-surface font-semibold" maxlength="1" readonly="" type="text" value="4"/>
+<input class="w-10 h-11 text-center font-display-lg-mobile text-data-metric bg-surface-container rounded-lg focus:outline-none focus:bg-surface-container-high text-on-surface font-semibold" maxlength="1" readonly="" type="text" value="9"/>
+<input class="w-10 h-11 text-center font-display-lg-mobile text-data-metric bg-surface-container rounded-lg focus:outline-none focus:bg-surface-container-high text-on-surface font-semibold" maxlength="1" readonly="" type="text" value="2"/>
+<input class="w-10 h-11 text-center font-display-lg-mobile text-data-metric bg-surface-container rounded-lg focus:outline-none focus:bg-surface-container-high text-on-surface font-semibold" maxlength="1" readonly="" type="password" value="4"/>
+<input class="w-10 h-11 text-center font-display-lg-mobile text-data-metric bg-surface-container rounded-lg focus:outline-none focus:bg-surface-container-high text-on-surface font-semibold" maxlength="1" readonly="" type="password" value="8"/>
+</div>
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span class="font-label-sm text-label-sm font-medium">Credencial Médica Verificada · Sesión en dispositivo de Carlos</span>
+</div>
+</div>
+<!-- Saludo Personalizado & Metadata Médica -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col space-y-2">
+<div class="flex items-start justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-primary font-semibold">Plan Clínico Activo</span>
+<h2 class="font-display-lg-mobile text-display-lg-mobile text-on-surface font-semibold mt-0.5">¡Hola, Carlos! 👋</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Tu plan activo para <strong class="text-on-surface font-semibold">Recomposición Corporal</strong> está listo y verificado.</p>
+</div>
+<div class="w-12 h-12 rounded-full overflow-hidden bg-surface-container flex items-center justify-center shrink-0 ml-2">
+<img class="w-full h-full object-cover" data-alt="Close-up clinical portrait photo of Carlos Mendoza, a 34-year-old male athlete smiling naturally in an athletic sports facility with soft diffused lighting, high clarity, and natural skin textures in teal and clean neutral tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtSrR7FElDYsPhUBvU3qDKhupkYh_JnQi84cXLRKJicDSBCp_ntEgpYYnoIzt4Tg-3qWGkR18hcBlvju23yPzDaPdaffKhpDR70sKlIypbzHzOP9ErX8Fi3ZkNPPJtxnCV2hyTLuhrEKSWCTjVEqlL9eCJAFczBlu-1Pay5Ez8cVMebgK5EZT57dyYb-qj4OjeTWBAylUB9pxlUMYppJkZHoPfx4RQ-YexN3Aj2yQWCRvfVi-46S76"/>
+</div>
+</div>
+<div class="pt-2 border-0 flex items-center gap-1.5 text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-primary text-[16px]">stethoscope</span>
+<span>Actualizado: 24 Oct, 2024 · <strong>Dr. Alejandro Valdés</strong> (Med. Deportiva)</span>
+</div>
+</div>
+</section>
+<!-- 2. DAILY NUTRITION TARGETS CARD -->
+<section class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">nutrition</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Metas Nutricionales Diarias</h3>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-medium">Déficit -15% Activo</span>
+</div>
+<!-- Circular / Radial Target Highlight -->
+<div class="flex items-center gap-4 p-3.5 rounded-xl bg-surface-container-low">
+<!-- SVG Progress Ring -->
+<div class="relative w-20 h-20 shrink-0 flex items-center justify-center">
+<svg class="w-20 h-20 -rotate-90" viewbox="0 0 36 36">
+<!-- Background Ring -->
+<path class="text-surface-container-high" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.2"></path>
+<!-- Active Arc (85% fill) -->
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="85, 100" stroke-linecap="round" stroke-width="3.2"></path>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary text-[18px]">local_fire_department</span>
+<span class="font-label-sm text-[10px] text-outline font-semibold leading-none">TARGET</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-baseline gap-1">
+<span class="font-display-lg text-headline-lg text-on-surface font-semibold tracking-tight">2,431</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">kcal/día</span>
+</div>
+<p class="font-body-sm text-label-md text-on-surface-variant line-clamp-2">Gasto total ajustado (TDEE: 2,860 kcal). Optimizado para conservación de masa magra.</p>
+</div>
+</div>
+<!-- Macronutrient Breakdown Meters -->
+<div class="space-y-2.5">
+<!-- Proteínas -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest flex flex-col space-y-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-title-sm text-body-sm-medium text-on-surface font-semibold">Proteínas</span>
+<span class="px-1.5 py-0.2 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-[10px]">Ajuste Renal Protegido</span>
+</div>
+<span class="font-data-table text-data-table text-on-surface font-semibold">160 g <span class="text-outline font-normal">· 640 kcal (26.3%)</span></span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 26.3%"></div>
+</div>
+</div>
+<!-- Carbohidratos -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest flex flex-col space-y-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="font-title-sm text-body-sm-medium text-on-surface font-semibold">Carbohidratos Complejos</span>
+</div>
+<span class="font-data-table text-data-table text-on-surface font-semibold">277 g <span class="text-outline font-normal">· 1,107 kcal (45.6%)</span></span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 45.6%"></div>
+</div>
+</div>
+<!-- Grasas Lipídicas -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest flex flex-col space-y-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span class="font-title-sm text-body-sm-medium text-on-surface font-semibold">Grasas Esenciales</span>
+</div>
+<span class="font-data-table text-data-table text-on-surface font-semibold">76 g <span class="text-outline font-normal">· 684 kcal (28.1%)</span></span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 28.1%"></div>
+</div>
+</div>
+</div>
+<!-- Hydration Tracker Widget -->
+<div class="p-3.5 rounded-xl bg-surface-container-low flex flex-col space-y-2.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">water_drop</span>
+</div>
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold">Protocolo de Hidratación</h4>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Meta diaria: 3.4 Litros (3,400 ml)</span>
+</div>
+</div>
+<button aria-label="Añadir vaso de agua" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-primary text-on-primary font-label-sm text-label-sm font-medium active:scale-95 transition-transform" id="btn-add-water">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span>+250ml</span>
+</button>
+</div>
+<!-- Water Glasses Grid (12 segments of ~283ml, currently 8 filled) -->
+<div class="flex items-center justify-between gap-1 pt-1" id="hydration-grid">
+<!-- 1 to 8 Active, 9 to 12 Pending -->
+<span class="material-symbols-outlined text-[20px] text-primary transition-colors" style="font-variation-settings: 'FILL' 1;">local_drink</span>
+<span class="material-symbols-outlined text-[20px] text-primary transition-colors" style="font-variation-settings: 'FILL' 1;">local_drink</span>
+<span class="material-symbols-outlined text-[20px] text-primary transition-colors" style="font-variation-settings: 'FILL' 1;">local_drink</span>
+<span class="material-symbols-outlined text-[20px] text-primary transition-colors" style="font-variation-settings: 'FILL' 1;">local_drink</span>
+<span class="material-symbols-outlined text-[20px] text-primary transition-colors" style="font-variation-settings: 'FILL' 1;">local_drink</span>
+<span class="material-symbols-outlined text-[20px] text-primary transition-colors" style="font-variation-settings: 'FILL' 1;">local_drink</span>
+<span class="material-symbols-outlined text-[20px] text-primary transition-colors" style="font-variation-settings: 'FILL' 1;">local_drink</span>
+<span class="material-symbols-outlined text-[20px] text-primary transition-colors" style="font-variation-settings: 'FILL' 1;">local_drink</span>
+<span class="material-symbols-outlined text-[20px] text-outline-variant transition-colors">local_drink</span>
+<span class="material-symbols-outlined text-[20px] text-outline-variant transition-colors">local_drink</span>
+<span class="material-symbols-outlined text-[20px] text-outline-variant transition-colors">local_drink</span>
+<span class="material-symbols-outlined text-[20px] text-outline-variant transition-colors">local_drink</span>
+</div>
+<div class="flex justify-between items-center text-label-sm font-label-sm text-on-surface-variant pt-0.5">
+<span id="hydration-status-text">8 de 12 tomas registradas (2.0L consumidos)</span>
+<span class="text-primary font-semibold">58.8%</span>
+</div>
+</div>
+</section>
+<!-- 3. MEAL PLAN & EQUIVALENTS ACCORDION -->
+<section class="flex flex-col space-y-space-xs">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">restaurant_menu</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Plan Alimentario &amp; SMAE</h3>
+</div>
+<span class="font-label-sm text-label-sm text-outline">4 Tiempos Clínicos</span>
+</div>
+<!-- Accordion Items -->
+<div class="space-y-2.5">
+<!-- 1. Desayuno -->
+<div class="rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden meal-accordion">
+<button class="w-full p-4 flex items-center justify-between text-left accordion-toggle hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[22px]">sunny</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold">1. Desayuno</h4>
+<span class="px-1.5 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant font-medium">08:00 AM</span>
+</div>
+<span class="font-data-table text-data-table text-primary font-semibold">540 kcal</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant transition-transform chevron-icon rotate-180">expand_more</span>
+</button>
+<div class="accordion-content p-4 pt-0 flex flex-col space-y-3">
+<!-- Meal Photo / Presentation Banner -->
+<div class="w-full h-36 rounded-lg overflow-hidden relative shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Overhead gourmet healthy breakfast featuring fluffy egg omelette with fresh baby spinach and cherry tomatoes, two golden toasted whole wheat bread slices, fresh hass avocado slices, and bright cubed ripe papaya in a ceramic bowl on a clean minimalist slate surface with morning natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyZgWCG4hXEvsFh1cj_6ZZVuGXVRw6PphkFB7A_AmsFHdVa8_bPBivcyxhWpWqRds3gQ6UC5dZee4vHW00VoSwiQ_qzQzCRGEB1eW2jWr1RfgsFmWoc_-zeyCYFpMZfsUw9ioRJHYwqcFJQX_gUvyaZUTDPydNuguCdH5zcWKYmxTcqjkL5YToEqpL3OtcVfI2dFGpd19r8lYoe2YdtHd7oh5gRM59v9SVmk5h0KSSYrknGedKM6c0"/>
+<div class="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-surface/90 backdrop-blur-sm text-on-surface font-label-sm text-label-sm font-medium">
+              Sugerencia de emplatado
+            </div>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low text-on-surface text-body-sm font-body-sm">
+<p class="font-semibold text-on-surface mb-1">Menú Prescrito:</p>
+<p class="text-on-surface-variant">Omelette de 2 huevos completos y claras con espinaca y tomate cherry, 2 rebanadas de pan integral tostado, 1/3 de aguacate Hass y 1 taza de papaya en cubos.</p>
+</div>
+<!-- SMAE Breakdown Badges -->
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold block mb-1.5">Equivalentes SMAE:</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">1 Verdura</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">1 Fruta</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">2 Cereales s/g</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">2 AOA magro</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">1 Grasa s/p</span>
+</div>
+</div>
+<!-- Sustitutos / Intercambios Dropdown Toggle -->
+<div class="pt-1">
+<button class="w-full py-2 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold flex items-center justify-between transition-colors sub-toggle">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">swap_horiz</span>
+                Opciones de Intercambio SMAE Directo
+              </span>
+<span class="material-symbols-outlined text-[16px] sub-chevron">arrow_drop_down</span>
+</button>
+<div class="hidden sub-content p-2.5 mt-1 rounded-lg bg-surface-container-low text-body-sm font-body-sm text-on-surface-variant space-y-1.5">
+<div class="flex items-start gap-1.5">
+<span class="material-symbols-outlined text-primary text-[15px] shrink-0 mt-0.5">check_small</span>
+<span><strong>2 Cereales:</strong> Reemplaza el pan por 1/2 taza de avena en hojuelas cocida o 2 tortillas de maíz nixtamalizado.</span>
+</div>
+<div class="flex items-start gap-1.5">
+<span class="material-symbols-outlined text-primary text-[15px] shrink-0 mt-0.5">check_small</span>
+<span><strong>2 AOA Magro:</strong> Sustituye huevo por 60g de queso cottage bajo en grasa o pechuga de pavo horneada.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 2. Almuerzo / Comida -->
+<div class="rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden meal-accordion">
+<button class="w-full p-4 flex items-center justify-between text-left accordion-toggle hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[22px]">lunch_dining</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold">2. Almuerzo Principal</h4>
+<span class="px-1.5 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant font-medium">02:00 PM</span>
+</div>
+<span class="font-data-table text-data-table text-primary font-semibold">820 kcal</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant transition-transform chevron-icon">expand_more</span>
+</button>
+<div class="accordion-content hidden p-4 pt-0 flex flex-col space-y-3">
+<div class="p-3 rounded-lg bg-surface-container-low text-on-surface text-body-sm font-body-sm">
+<p class="font-semibold text-on-surface mb-1">Menú Prescrito:</p>
+<p class="text-on-surface-variant">150g de pechuga de pollo a la plancha sazonada con finas hierbas, 1 taza de arroz blanco al vapor con quinoa, ensalada mixta abundante (lechugas, pepino, rábano) con 1 cdta de aceite de oliva extravirgen y 1/2 taza de frijoles negros cocidos.</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold block mb-1.5">Equivalentes SMAE:</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">2 Verduras</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">1 Fruta</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">3 Cereales</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">1 Leguminosa</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">3 AOA</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">2 Grasas</span>
+</div>
+</div>
+<!-- Intercambio Rápido Verde -->
+<div class="flex items-center gap-2 p-2.5 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span class="font-label-sm text-label-sm"><strong>Intercambio Rápido:</strong> Puedes alternar pollo por 160g de lomo de atún fresco o salmón silvestre (restar 1 cdta de aceite).</span>
+</div>
+</div>
+</div>
+<!-- 3. Merienda / Pre-entreno -->
+<div class="rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden meal-accordion">
+<button class="w-full p-4 flex items-center justify-between text-left accordion-toggle hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[22px]">energy_savings_leaf</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold">3. Merienda Pre-Entreno</h4>
+<span class="px-1.5 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant font-medium">05:30 PM</span>
+</div>
+<span class="font-data-table text-data-table text-primary font-semibold">430 kcal</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant transition-transform chevron-icon">expand_more</span>
+</button>
+<div class="accordion-content hidden p-4 pt-0 flex flex-col space-y-3">
+<div class="p-3 rounded-lg bg-surface-container-low text-on-surface text-body-sm font-body-sm">
+<p class="font-semibold text-on-surface mb-1">Menú Prescrito:</p>
+<p class="text-on-surface-variant">Avena nocturna (overnight oats) reposada con leche de almendras sin endulzar, 1 manzana gala picada con canela de Ceilán y 14 almendras enteras tostadas sin sal.</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold block mb-1.5">Equivalentes SMAE:</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">2 Frutas</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">1 Cereal s/g</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">2 Grasas c/proteína</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. Cena -->
+<div class="rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden meal-accordion">
+<button class="w-full p-4 flex items-center justify-between text-left accordion-toggle hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[22px]">nights_stay</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold">4. Cena Restauradora</h4>
+<span class="px-1.5 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant font-medium">09:00 PM</span>
+</div>
+<span class="font-data-table text-data-table text-primary font-semibold">641 kcal</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant transition-transform chevron-icon">expand_more</span>
+</button>
+<div class="accordion-content hidden p-4 pt-0 flex flex-col space-y-3">
+<div class="p-3 rounded-lg bg-surface-container-low text-on-surface text-body-sm font-body-sm">
+<p class="font-semibold text-on-surface mb-1">Menú Prescrito:</p>
+<p class="text-on-surface-variant">Filete de pescado blanco fresco (tilapia o merluza) al horno con pimientos asados, calabacitas salteadas y 1 papa mediana al horno con toque de aceite de oliva.</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold block mb-1.5">Equivalentes SMAE:</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">2 Verduras</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">2 Cereales</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">1 Leguminosa</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">2 AOA</span>
+<span class="px-2 py-1 rounded-md bg-surface-container text-on-surface font-label-sm text-label-sm">1 Grasa</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. TRAINING ROUTINE TABBED SECTION -->
+<section class="flex flex-col space-y-space-xs">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">fitness_center</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Rutina Biomecánica Adaptada</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-primary font-medium">Ciclo 1</span>
+</div>
+<!-- Clinical Warning Banner for Joints -->
+<div class="p-3 rounded-xl bg-amber-50 text-amber-950 flex items-start gap-2.5 shadow-sm">
+<span class="material-symbols-outlined text-amber-600 text-[20px] shrink-0 mt-0.5">warning</span>
+<div class="text-body-sm font-body-sm">
+<strong class="font-semibold text-amber-900 block">Cuidado Articular Activo:</strong>
+<span>Flexión de rodilla <span class="font-semibold">≤90°</span> mandatoria por protocolo de remodelación de tendón rotuliano derecho. Evitar rebote balístico en fondos.</span>
+</div>
+</div>
+<!-- Horizontal Routine Days Selector (Swipeable tabs) -->
+<div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar" id="routine-tabs">
+<button class="routine-tab px-3.5 py-2 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold whitespace-nowrap shadow-sm transition-all" data-target="tab-dia-a">
+        Día A: Upper / Torso (Activo)
+      </button>
+<button class="routine-tab px-3.5 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md font-medium whitespace-nowrap transition-all" data-target="tab-dia-b">
+        Día B: Pierna Adaptada
+      </button>
+<button class="routine-tab px-3.5 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md font-medium whitespace-nowrap transition-all" data-target="tab-dia-c">
+        Día C: Tracción &amp; Core
+      </button>
+<button class="routine-tab px-3.5 py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-md text-label-md font-medium whitespace-nowrap transition-all" data-target="tab-dia-d">
+        Día D: Recuperación Activa
+      </button>
+</div>
+<!-- Exercises Container for Día A -->
+<div class="space-y-3" id="exercises-list">
+<!-- Ejercicio 1 -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col space-y-3">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-1.5 mb-1">
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-sm text-label-sm font-semibold">1</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm font-medium">Articulación Segura</span>
+</div>
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold">Press de Banca con Mancuernas</h4>
+</div>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-surface-container text-primary font-label-sm text-label-sm font-medium transition-colors" onclick="alert('Abriendo demostración técnica en vídeo 4K a 60fps...')">
+<span class="material-symbols-outlined text-[16px]">play_circle</span>
+<span>Video Demo</span>
+</button>
+</div>
+<div class="grid grid-cols-3 gap-2 p-2.5 rounded-lg bg-surface-container-low text-center">
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Series &amp; Reps</span>
+<span class="font-data-table text-body-sm-medium text-on-surface font-semibold">4 x 8-10</span>
+</div>
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Esfuerzo</span>
+<span class="font-data-table text-body-sm-medium text-on-surface font-semibold">RIR 2</span>
+</div>
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Descanso</span>
+<span class="font-data-table text-body-sm-medium text-on-surface font-semibold">90s</span>
+</div>
+</div>
+</div>
+<!-- Ejercicio 2 -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col space-y-3">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-1.5 mb-1">
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-sm text-label-sm font-semibold">2</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-medium">Escápula Neutral</span>
+</div>
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold">Jalón al Pecho con Agarre Neutro</h4>
+</div>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-surface-container text-primary font-label-sm text-label-sm font-medium transition-colors" onclick="alert('Abriendo demostración técnica en vídeo...')">
+<span class="material-symbols-outlined text-[16px]">play_circle</span>
+<span>Video Demo</span>
+</button>
+</div>
+<div class="grid grid-cols-3 gap-2 p-2.5 rounded-lg bg-surface-container-low text-center">
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Series &amp; Reps</span>
+<span class="font-data-table text-body-sm-medium text-on-surface font-semibold">4 x 10-12</span>
+</div>
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Esfuerzo</span>
+<span class="font-data-table text-body-sm-medium text-on-surface font-semibold">RIR 1-2</span>
+</div>
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Descanso</span>
+<span class="font-data-table text-body-sm-medium text-on-surface font-semibold">75s</span>
+</div>
+</div>
+</div>
+<!-- Ejercicio 3 -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col space-y-3">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-1.5 mb-1">
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-sm text-label-sm font-semibold">3</span>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-medium">Protocolo Rotuliano (≤20°)</span>
+</div>
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold">Peso Muerto Rumano con Mancuernas</h4>
+</div>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-surface-container text-primary font-label-sm text-label-sm font-medium transition-colors" onclick="alert('Abriendo demostración técnica en vídeo...')">
+<span class="material-symbols-outlined text-[16px]">play_circle</span>
+<span>Video Demo</span>
+</button>
+</div>
+<div class="grid grid-cols-3 gap-2 p-2.5 rounded-lg bg-surface-container-low text-center">
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Series &amp; Reps</span>
+<span class="font-data-table text-body-sm-medium text-on-surface font-semibold">4 x 10</span>
+</div>
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Esfuerzo</span>
+<span class="font-data-table text-body-sm-medium text-on-surface font-semibold">RIR 2</span>
+</div>
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Flexión</span>
+<span class="font-data-table text-body-sm-medium text-primary font-semibold">Knee ≤20°</span>
+</div>
+</div>
+</div>
+<!-- Ejercicio 4 -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col space-y-3">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-1.5 mb-1">
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-primary font-label-sm text-label-sm font-semibold">4</span>
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-medium">Superserie Core Anti-Extensión</span>
+</div>
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold">Plancha RKC + Deadbug</h4>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 p-2.5 rounded-lg bg-surface-container-low text-center">
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Series</span>
+<span class="font-data-table text-body-sm-medium text-on-surface font-semibold">3 Rondas</span>
+</div>
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Tiempo / Reps</span>
+<span class="font-data-table text-body-sm-medium text-on-surface font-semibold">45s / 12 reps</span>
+</div>
+<div>
+<span class="font-label-sm text-[10px] text-outline uppercase block">Cadencia</span>
+<span class="font-data-table text-body-sm-medium text-on-surface font-semibold">Control 3-1-1</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. PROGRESS SNAPSHOT FOOTER & NOTA CLÍNICA -->
+<section class="flex flex-col space-y-space-md pt-2">
+<!-- Progress Snapshot Card with SVG Trend -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col space-y-3">
+<div class="flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline font-semibold">Evolución Ponderal</span>
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold">Tendencia de Peso Corporal</h4>
+</div>
+<div class="px-2.5 py-1 rounded-full bg-surface-container-high text-primary flex items-center gap-1 font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">trending_down</span>
+<span>Δ -4.0 kg</span>
+</div>
+</div>
+<!-- Sparkline Graphic (88.3 kg -> 84.3 kg) -->
+<div class="p-3 rounded-lg bg-surface-container-low flex flex-col space-y-2">
+<div class="flex justify-between items-baseline">
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">84.3</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">kg actuales</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Inicio: 88.3 kg (hace 6 sem)</span>
+</div>
+<!-- Inline SVG Sparkline -->
+<div class="w-full h-14">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 300 60">
+<defs>
+<lineargradient id="trendGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#00685f" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#00685f" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<path d="M 0 10 L 50 18 L 100 24 L 160 30 L 220 42 L 300 52 L 300 60 L 0 60 Z" fill="url(#trendGradient)"></path>
+<path d="M 0 10 L 50 18 L 100 24 L 160 30 L 220 42 L 300 52" fill="none" stroke="#00685f" stroke-linecap="round" stroke-width="3"></path>
+<circle cx="300" cy="52" fill="#00685f" r="4.5" stroke="#ffffff" stroke-width="2"></circle>
+</svg>
+</div>
+<div class="flex items-center justify-between pt-1 border-0 text-label-sm font-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1 text-primary font-medium">
+<span class="material-symbols-outlined text-[14px]">fitness_center</span>
+            +185g masa muscular / mes (ISAK 2)
+          </span>
+<span>Adherencia: 94%</span>
+</div>
+</div>
+</div>
+<!-- Official Clinical Prescription Signature Block -->
+<div class="p-4 rounded-xl bg-surface-container-low flex flex-col space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-title-sm text-title-sm font-bold shrink-0">
+          AV
+        </div>
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold">Dr. Alejandro Valdés</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Céd. Prof. 8492015 · Especialista en Med. del Deporte &amp; Nutrición ISAK 2</p>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Plan médico y nutricional personalizado formulado con biomarcadores en sangre y calorimetría indirecta. <strong class="text-on-surface">Próxima revisión sugerida en 21 días.</strong>
+</p>
+<div class="flex items-center gap-2 pt-1 font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Revisión programada: 14 de Noviembre, 2024</span>
+</div>
+</div>
+<!-- Action Buttons (WhatsApp Dispatch + PDF Download) -->
+<div class="flex flex-col space-y-2.5 pb-4 print:hidden">
+<!-- WhatsApp Integration Button -->
+<a class="w-full h-12 rounded-xl bg-[#16a34a] text-white flex items-center justify-center gap-2 font-title-sm text-title-sm font-medium shadow-sm hover:brightness-105 active:scale-[0.99] transition-all" href="https://wa.me/?text=Hola%20Dr.%20Alejandro,%20le%20escribe%20Carlos%20Mendoza%20con%20una%20duda%20sobre%20mi%20plan%20BioMetrix%20Pro" rel="noopener noreferrer" target="_blank">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24">
+<path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.698.077-2.228-.553-1.831-.756-3.003-2.617-3.094-2.738-.09-.121-.741-.986-.741-1.88 0-.895.469-1.336.636-1.517.167-.181.365-.226.487-.226.121 0 .243.002.348.007.112.006.262-.043.411.315.153.366.524 1.277.57 1.368.046.091.077.197.016.318-.061.121-.092.197-.183.303-.091.106-.192.237-.274.318-.091.091-.186.19-.08.372.106.182.471.777 1.011 1.258.697.62 1.284.812 1.467.903.182.091.289.076.395-.045.106-.121.456-.531.577-.713.121-.182.243-.152.41-.091.167.061 1.063.501 1.246.592.182.091.304.136.349.212.045.076.045.439-.099.844z"></path>
+</svg>
+<span>Compartir dudas por WhatsApp</span>
+</a>
+<!-- Secondary PDF / Print Download -->
+<button class="w-full h-11 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-title-sm text-title-sm font-medium flex items-center justify-center gap-2 transition-colors" onclick="window.print()">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Descargar Ficha Médica Completa</span>
+</button>
+</div>
+</section>
+</div>
+<script>
+  // Hydration micro-interaction
+  const btnAddWater = document.getElementById('btn-add-water');
+  const hydrationGrid = document.getElementById('hydration-grid');
+  const hydrationStatusText = document.getElementById('hydration-status-text');
+  let currentWaterGlasses = 8;
+  const totalWaterGlasses = 12;
+
+  if (btnAddWater && hydrationGrid) {
+    btnAddWater.addEventListener('click', () => {
+      if (currentWaterGlasses < totalWaterGlasses) {
+        currentWaterGlasses++;
+        const icons = hydrationGrid.querySelectorAll('span');
+        if (icons[currentWaterGlasses - 1]) {
+          icons[currentWaterGlasses - 1].classList.remove('text-outline-variant');
+          icons[currentWaterGlasses - 1].classList.add('text-primary');
+          icons[currentWaterGlasses - 1].style.fontVariationSettings = "'FILL' 1";
+        }
+        const liters = (currentWaterGlasses * 0.25).toFixed(1);
+        const percent = Math.round((currentWaterGlasses / totalWaterGlasses) * 100);
+        hydrationStatusText.textContent = `${currentWaterGlasses} de ${totalWaterGlasses} tomas registradas (${liters}L consumidos)`;
+        const percentEl = hydrationStatusText.nextElementSibling;
+        if (percentEl) percentEl.textContent = `${percent}%`;
+      } else {
+        alert('¡Excelente trabajo! Has completado tu meta diaria de hidratación recomendada (3.4 L).');
+      }
+    });
+  }
+
+  // PIN Gate Toggle Micro-interaction
+  const btnTogglePin = document.getElementById('btn-toggle-pin');
+  const pinVaultGate = document.getElementById('pin-vault-gate');
+  const btnClosePin = document.getElementById('btn-close-pin');
+
+  if (btnTogglePin && pinVaultGate) {
+    btnTogglePin.addEventListener('click', () => {
+      pinVaultGate.classList.toggle('hidden');
+      pinVaultGate.classList.toggle('flex');
+    });
+  }
+  if (btnClosePin && pinVaultGate) {
+    btnClosePin.addEventListener('click', () => {
+      pinVaultGate.classList.add('hidden');
+      pinVaultGate.classList.remove('flex');
+    });
+  }
+
+  // Accordion Expand/Collapse Logic
+  document.querySelectorAll('.meal-accordion').forEach((accordion) => {
+    const toggle = accordion.querySelector('.accordion-toggle');
+    const content = accordion.querySelector('.accordion-content');
+    const chevron = accordion.querySelector('.chevron-icon');
+
+    if (toggle && content && chevron) {
+      toggle.addEventListener('click', () => {
+        const isHidden = content.classList.contains('hidden');
+        if (isHidden) {
+          content.classList.remove('hidden');
+          chevron.classList.add('rotate-180');
+        } else {
+          content.classList.add('hidden');
+          chevron.classList.remove('rotate-180');
+        }
+      });
+    }
+
+    // Sub-exchange toggle inside breakfast
+    const subToggle = accordion.querySelector('.sub-toggle');
+    const subContent = accordion.querySelector('.sub-content');
+    const subChevron = accordion.querySelector('.sub-chevron');
+    if (subToggle && subContent) {
+      subToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        subContent.classList.toggle('hidden');
+        if (subChevron) subChevron.classList.toggle('rotate-180');
+      });
+    }
+  });
+
+  // Routine Tabs Selection Interaction
+  const routineTabs = document.querySelectorAll('.routine-tab');
+  routineTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      routineTabs.forEach(t => {
+        t.classList.remove('bg-primary', 'text-on-primary');
+        t.classList.add('bg-surface-container', 'text-on-surface-variant');
+      });
+      tab.classList.remove('bg-surface-container', 'text-on-surface-variant');
+      tab.classList.add('bg-primary', 'text-on-primary');
+    });
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.03)]" data-active-classes="text-primary font-medium"><div class="flex items-center justify-around h-16 px-space-xs"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] transition-colors gap-0.5 text-primary font-medium" data-path="patient-visor-summary" href="#"><span class="material-symbols-outlined text-[22px]">shield_person</span><span class="font-label-sm text-label-sm">Visor</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors gap-0.5" data-path="clinical-biometrics" href="#"><span class="material-symbols-outlined text-[22px]">monitor_heart</span><span class="font-label-sm text-label-sm">Biometrics</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors gap-0.5" data-path="consultation-notes" href="#"><span class="material-symbols-outlined text-[22px]">clinical_notes</span><span class="font-label-sm text-label-sm">Consult</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors gap-0.5" data-path="lab-diagnostics" href="#"><span class="material-symbols-outlined text-[22px]">lab_profile</span><span class="font-label-sm text-label-sm">Diagnostics</span></a></div></nav></body></html>
