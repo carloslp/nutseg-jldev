@@ -32,6 +32,8 @@ export default async function PatientPlanPage({
   }
 
   const existingPlan = await NutritionRepository.getActivePlan(id);
+  const pastPlans = await NutritionRepository.getPlans(id);
+  const permalink = await NutritionRepository.getPermalinkByClientId(id);
 
   return (
     <AdminLayout clientId={client.id} clientName={client.fullName}>
@@ -39,6 +41,8 @@ export default async function PatientPlanPage({
         client={client}
         latestLog={latestLog}
         existingPlan={existingPlan}
+        pastPlans={pastPlans}
+        permalinkSlug={permalink?.slugToken}
       />
     </AdminLayout>
   );

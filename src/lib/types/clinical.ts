@@ -46,10 +46,12 @@ export interface ClientProfile {
   sex: BiologicalSex;
   heightCm: number;
   phoneWhatsapp?: string;
+  phone?: string;
   email?: string;
   clinicalFlags: ClinicalFlag[];
   allergies: AllergenTag[];
   notes?: string;
+  isActive?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -120,10 +122,12 @@ export interface NutritionalPlan {
   id: string;
   clientId: string;
   biometricLogId?: string | null;
+  name?: string;
   formulaUsed: 'mifflin_st_jeor' | 'katch_mcardle';
   lbmKg?: number | null;
   tmbKcal: number;
   getdKcal: number;
+  tdeeKcal?: number;
   goal: GoalType;
   goalAdjustmentPct: number;
   targetKcal: number;
@@ -160,4 +164,37 @@ export interface PermalinkRecord {
   accessCount: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface FoodCatalogItem {
+  id: string;
+  name: string;
+  smaeGroup: 'aoa' | 'cereals' | 'legumes' | 'vegetables' | 'fruits' | 'fats' | 'milk';
+  portionQty: number;
+  portionUnit: string;
+  gramsNet: number;
+  kcal: number;
+  proteinG: number;
+  fatG: number;
+  carbsG: number;
+  allergenTags: AllergenTag[];
+  isActive?: boolean;
+  createdAt?: string;
+}
+
+export interface ExerciseCatalogItem {
+  id: string;
+  name: string;
+  movementPattern: 'squat' | 'hinge' | 'push_h' | 'push_v' | 'pull_h' | 'pull_v' | 'core' | 'arms';
+  primaryMuscle: string;
+  equipmentRequired: EquipmentType | 'bands';
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  jointStressTags: ('knee' | 'shoulder' | 'lower_back' | 'wrist')[];
+  defaultSets: number;
+  defaultReps: string;
+  defaultRestSec: number;
+  instructions?: string;
+  videoUrl?: string;
+  isActive?: boolean;
+  createdAt?: string;
 }

@@ -4,6 +4,7 @@ import { NutritionRepository } from '@/lib/db/repository';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { PatientHeader } from '@/components/admin/PatientHeader';
 import { ClinicalAlertBanner } from '@/components/admin/ClinicalAlertBanner';
+import { ImmediateDifferential } from '@/components/admin/ImmediateDifferential';
 import { CheckInForm } from '@/components/admin/CheckInForm';
 import { HistoryChart } from '@/components/admin/HistoryChart';
 import { HistoryTable } from '@/components/admin/HistoryTable';
@@ -34,7 +35,12 @@ export default async function PatientExpedientePage({
         {/* 2. Permanent Medical Flag Banner */}
         <ClinicalAlertBanner flags={client.clinicalFlags} bmi={bmi} />
 
-        {/* 3. Check-in Form & Evolution Chart Split Grid */}
+        {/* 3. Immediate Differential & Recomposition Bar */}
+        {logs.length > 0 && (
+          <ImmediateDifferential logs={logs} heightCm={client.heightCm} />
+        )}
+
+        {/* 4. Check-in Form & Evolution Chart Split Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           <div className="lg:col-span-5">
             <CheckInForm clientId={client.id} latestLog={latestLog} />
@@ -44,7 +50,7 @@ export default async function PatientExpedientePage({
           </div>
         </div>
 
-        {/* 4. Complete Inmutable History Table */}
+        {/* 5. Complete Inmutable History Table */}
         <HistoryTable logs={logs} heightCm={client.heightCm} />
       </div>
     </AdminLayout>

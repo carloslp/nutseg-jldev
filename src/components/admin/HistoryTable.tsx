@@ -1,4 +1,7 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { BiometricLog } from '@/lib/types/clinical';
 import { calculateBMI } from '@/lib/engine/macros';
 
@@ -8,8 +11,30 @@ interface HistoryTableProps {
 }
 
 export function HistoryTable({ logs, heightCm }: HistoryTableProps) {
+  const router = useRouter();
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
   // Sort descending for table view (latest first)
-  const sorted = [...logs].sort((a, b) => new Date(b.recordedAt).getTime() - new Date(a.recordedAt).getTime());
+  const sorted = [...logs].sort(
+    (a, b) => new Date(b.recordedAt).getTime() - new Date(a.recordedAt).getTime()
+  );
+
+  const handleDelete = async (id: string, date: string) => {
+    if (!confirm(`¿Eliminar la consulta del ${date}? Esta acción no se puede deshacer.`)) return;
+    setDeletingId(id);
+    try {
+      const res = await fetch(`/api/admin/checkin/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        router.refresh();
+      } else {
+        alert('Error al eliminar registro biométrico');
+      }
+    } catch {
+      alert('Error de conexión al eliminar');
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   return (
     <div className="bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm overflow-hidden flex flex-col">
@@ -36,6 +61,7 @@ export function HistoryTable({ logs, heightCm }: HistoryTableProps) {
               <th className="py-3 px-4">Abdomen</th>
               <th className="py-3 px-4">FAF / Días</th>
               <th className="py-3 px-4">Notas Clínicas</th>
+              <th className="py-3 px-4 text-right">Acción</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-outline-variant/10 text-on-surface">
@@ -109,6 +135,16 @@ export function HistoryTable({ logs, heightCm }: HistoryTableProps) {
                   </td>
                   <td className="py-3.5 px-4 text-on-surface-variant max-w-xs truncate" title={log.notes}>
                     {log.notes || '—'}
+                  </td>
+                  <td className="py-3.5 px-4 text-right">
+                    <button
+                      onClick={() => handleDelete(log.id, log.recordedAt)}
+                      disabled={deletingId === log.id}
+                      className="p-1 rounded-lg text-rose-600 hover:text-rose-800 hover:bg-rose-50 transition-colors disabled:opacity-50"
+                      title="Eliminar consulta"
+                    >
+                      <span className="material-symbols-outlined text-[17px]">delete</span>
+                    </button>
                   </td>
                 </tr>
               );

@@ -3,11 +3,17 @@ import {
   BiometricLog,
   NutritionalPlan,
   PermalinkRecord,
+  FoodCatalogItem,
+  ExerciseCatalogItem,
+  AllergenTag,
 } from '../types/clinical';
 import { hashPin } from '../security/auth';
 import { createAdminSupabaseClient } from '../supabase/server';
+import { DEFAULT_FOOD_CATALOG } from '../engine/smae';
+import { EXERCISE_DATABASE } from '../engine/workout';
+import { nanoid } from 'nanoid';
 
-// Initial seed data for pilot patient: Carlos Mendoza Silva (#BIO-9942)
+// Initial fallback mock data for testing or when Supabase is not reachable
 const INITIAL_CLIENT: ClientProfile = {
   id: 'c1111111-1111-1111-1111-111111111111',
   fullName: 'Carlos Mendoza Silva',
@@ -15,10 +21,12 @@ const INITIAL_CLIENT: ClientProfile = {
   sex: 'male',
   heightCm: 179,
   phoneWhatsapp: '+52 55 1234 5678',
+  phone: '+52 55 1234 5678',
   email: 'carlos.mendoza@ejemplo.com',
   clinicalFlags: ['diabetes_type_2', 'knee_injury'],
   allergies: [],
   notes: '8 meses en seguimiento. Lesión en tendón rotuliano derecho en fase de remodelación. Diabetes Tipo 2 controlada con metformina. Restricción de aporte proteico agresivo > 2.0 g/kg.',
+  isActive: true,
   createdAt: '2024-02-15T10:00:00Z',
   updatedAt: '2024-10-24T18:00:00Z',
 };
@@ -42,44 +50,6 @@ const INITIAL_LOGS: BiometricLog[] = [
     equipmentAvailable: ['gym'],
     notes: 'Consulta inicial #1. Inicio de acondicionamiento y déficit moderado.',
     createdAt: '2024-03-01T10:00:00Z',
-  },
-  {
-    id: 'b1111111-0002-0000-0000-000000000002',
-    clientId: 'c1111111-1111-1111-1111-111111111111',
-    recordedAt: '2024-05-15',
-    weightKg: 89.1,
-    bodyFatPct: 22.0,
-    muscleMassKg: 65.1,
-    waistCm: 92.5,
-    hipCm: 102.0,
-    abdomenCm: 94.0,
-    armRelaxedCm: 34.5,
-    armContractedCm: 37.0,
-    thighCm: 58.5,
-    activityFactor: 1.5,
-    trainingDays: 4,
-    equipmentAvailable: ['gym'],
-    notes: 'Consulta #4. Buena adherencia, glucemia en ayuno estabilizada.',
-    createdAt: '2024-05-15T10:00:00Z',
-  },
-  {
-    id: 'b1111111-0003-0000-0000-000000000003',
-    clientId: 'c1111111-1111-1111-1111-111111111111',
-    recordedAt: '2024-08-10',
-    weightKg: 86.4,
-    bodyFatPct: 19.8,
-    muscleMassKg: 67.0,
-    waistCm: 89.0,
-    hipCm: 100.0,
-    abdomenCm: 90.5,
-    armRelaxedCm: 35.0,
-    armContractedCm: 38.0,
-    thighCm: 58.0,
-    activityFactor: 1.55,
-    trainingDays: 4,
-    equipmentAvailable: ['gym'],
-    notes: 'Consulta #7. Reducción notoria en perímetro abdominal (-3.5cm).',
-    createdAt: '2024-08-10T10:00:00Z',
   },
   {
     id: 'b1111111-0004-0000-0000-000000000004',
@@ -218,25 +188,6 @@ const INITIAL_PLAN: NutritionalPlan = {
         { id: 'ex_8', name: 'Plancha Abdominal Frontal', movementPattern: 'core', equipment: 'bodyweight', jointStressTags: [], sets: 3, reps: '60 seg', restSec: 60, rpe: 7.5, notes: 'Pelvis en retroversión activa.' },
       ],
     },
-    {
-      dayName: 'Día 3 - Torso B (Fuerza Vertical & Tracción)',
-      focus: 'Dorsales amplios y deltoides posterior',
-      exercises: [
-        { id: 'ex_9', name: 'Jalón al Pecho con Agarre Neutro', movementPattern: 'pull_v', equipment: 'machine', jointStressTags: [], sets: 4, reps: '10-12', restSec: 90, rpe: 8, notes: 'Tracción controlada hacia el esternón.' },
-        { id: 'ex_10', name: 'Press en Máquina con Agarre Neutro', movementPattern: 'push_h', equipment: 'machine', jointStressTags: [], sets: 4, reps: '12', restSec: 75, rpe: 7.5, notes: 'Cero pinzamiento subacromial.' },
-        { id: 'ex_11', name: 'Remo Gironda en Polea Baja', movementPattern: 'pull_h', equipment: 'gym', jointStressTags: [], sets: 4, reps: '12', restSec: 75, rpe: 8, notes: 'Enfocar la retracción de escápulas.' },
-        { id: 'ex_12', name: 'Face Pulls en Polea con Cuerda', movementPattern: 'pull_h', equipment: 'gym', jointStressTags: [], sets: 4, reps: '15', restSec: 60, rpe: 7.5, notes: 'Salud escapular y manguito rotador.' },
-      ],
-    },
-    {
-      dayName: 'Día 4 - Pierna B (Cadena Posterior & Isquiotibiales)',
-      focus: 'Bisagra de cadera y fuerza de glúteo',
-      exercises: [
-        { id: 'ex_13', name: 'Peso Muerto Rumano con Mancuernas', movementPattern: 'hinge', equipment: 'dumbbells', jointStressTags: [], sets: 4, reps: '10-12', restSec: 90, rpe: 8, notes: 'Espalda neutra, recorrido hasta media tibia.' },
-        { id: 'ex_14', name: 'Curl Femoral Tumbado en Máquina', movementPattern: 'hinge', equipment: 'machine', jointStressTags: [], sets: 4, reps: '12-14', restSec: 75, rpe: 8.5, notes: 'Fase excéntrica lenta de 3 segundos.' },
-        { id: 'ex_15', name: 'Puente de Glúteos en Suelo Unilateral', movementPattern: 'hinge', equipment: 'bodyweight', jointStressTags: [], sets: 3, reps: '15 por pierna', restSec: 60, rpe: 7, notes: 'Activación neuromuscular sin sobrecarga.' },
-      ],
-    },
   ],
 };
 
@@ -248,19 +199,20 @@ const INITIAL_PERMALINK: PermalinkRecord = {
   passwordHash: hashPin('NUT-482'),
   passwordHintAdmin: 'NUT-482',
   isActive: true,
-  expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-  lastAccessedAt: new Date(Date.now() - 3600 * 1000).toISOString(),
   accessCount: 14,
-  createdAt: '2024-10-24T18:00:00Z',
-  updatedAt: '2024-10-24T18:00:00Z',
+  lastAccessedAt: '2024-10-25T14:32:00Z',
+  createdAt: '2024-10-24T18:05:00Z',
+  updatedAt: '2024-10-25T14:32:00Z',
 };
 
-// Global in-memory data store (persists across server requests in process)
+// Global in-memory store for fallback/dev
 interface GlobalStore {
   clients: Map<string, ClientProfile>;
   biometrics: Map<string, BiometricLog[]>;
-  plans: Map<string, NutritionalPlan>;
+  plans: Map<string, NutritionalPlan[]>;
   permalinks: Map<string, PermalinkRecord>;
+  foodCatalog: Map<string, FoodCatalogItem>;
+  exerciseCatalog: Map<string, ExerciseCatalogItem>;
 }
 
 declare global {
@@ -271,39 +223,43 @@ function getStore(): GlobalStore {
   if (!global.__nutsegStore) {
     const clients = new Map<string, ClientProfile>();
     const biometrics = new Map<string, BiometricLog[]>();
-    const plans = new Map<string, NutritionalPlan>();
+    const plans = new Map<string, NutritionalPlan[]>();
     const permalinks = new Map<string, PermalinkRecord>();
+    const foodCatalog = new Map<string, FoodCatalogItem>();
+    const exerciseCatalog = new Map<string, ExerciseCatalogItem>();
 
     clients.set(INITIAL_CLIENT.id, INITIAL_CLIENT);
     biometrics.set(INITIAL_CLIENT.id, [...INITIAL_LOGS]);
-    plans.set(INITIAL_CLIENT.id, INITIAL_PLAN);
+    plans.set(INITIAL_CLIENT.id, [INITIAL_PLAN]);
     permalinks.set(INITIAL_PERMALINK.slugToken, INITIAL_PERMALINK);
 
-    global.__nutsegStore = { clients, biometrics, plans, permalinks };
+    global.__nutsegStore = { clients, biometrics, plans, permalinks, foodCatalog, exerciseCatalog };
   }
   return global.__nutsegStore;
 }
 
 export class NutritionRepository {
-  /**
-   * Check if live Supabase is configured and reachable.
-   */
   private static isSupabaseConfigured(): boolean {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
     return Boolean(url && !url.includes('placeholder.supabase.co'));
   }
 
-  // --- CLIENTS ---
+  // ==========================================================================
+  // CLIENTS
+  // ==========================================================================
   static async getClients(): Promise<ClientProfile[]> {
     if (this.isSupabaseConfigured()) {
       try {
         const supabase = createAdminSupabaseClient();
-        const { data, error } = await supabase.from('clients').select('*').order('created_at', { ascending: false });
+        const { data, error } = await supabase
+          .from('clients')
+          .select('*')
+          .order('created_at', { ascending: false });
         if (!error && data) {
           return data.map(this.mapClientFromDb);
         }
       } catch (e) {
-        console.warn('Supabase query failed, using local store:', e);
+        console.warn('Supabase getClients error, fallback to memory:', e);
       }
     }
     const store = getStore();
@@ -314,12 +270,16 @@ export class NutritionRepository {
     if (this.isSupabaseConfigured()) {
       try {
         const supabase = createAdminSupabaseClient();
-        const { data, error } = await supabase.from('clients').select('*').eq('id', id).single();
+        const { data, error } = await supabase
+          .from('clients')
+          .select('*')
+          .eq('id', id)
+          .maybeSingle();
         if (!error && data) {
           return this.mapClientFromDb(data);
         }
       } catch (e) {
-        console.warn('Supabase query failed, using local store:', e);
+        console.warn('Supabase getClientById error, fallback to memory:', e);
       }
     }
     const store = getStore();
@@ -332,6 +292,7 @@ export class NutritionRepository {
     const newClient: ClientProfile = {
       ...data,
       id,
+      isActive: data.isActive ?? true,
       createdAt: now,
       updatedAt: now,
     };
@@ -339,20 +300,27 @@ export class NutritionRepository {
     if (this.isSupabaseConfigured()) {
       try {
         const supabase = createAdminSupabaseClient();
-        await supabase.from('clients').insert({
+        const { error } = await supabase.from('clients').insert({
           id,
           full_name: newClient.fullName,
           birth_date: newClient.birthDate,
           sex: newClient.sex,
           height_cm: newClient.heightCm,
-          phone_whatsapp: newClient.phoneWhatsapp,
+          phone_whatsapp: newClient.phoneWhatsapp || newClient.phone,
+          phone: newClient.phone || newClient.phoneWhatsapp,
           email: newClient.email,
           clinical_flags: newClient.clinicalFlags,
           allergies: newClient.allergies,
           notes: newClient.notes,
+          is_active: newClient.isActive,
+          created_at: now,
+          updated_at: now,
         });
+        if (error) {
+          console.warn('Supabase client insert error:', error);
+        }
       } catch (e) {
-        console.warn('Supabase insert failed, saving to local store:', e);
+        console.warn('Supabase client insert failed:', e);
       }
     }
 
@@ -361,7 +329,72 @@ export class NutritionRepository {
     return newClient;
   }
 
-  // --- BIOMETRICS ---
+  static async updateClient(id: string, updates: Partial<ClientProfile>): Promise<ClientProfile | null> {
+    const now = new Date().toISOString();
+    let updated: ClientProfile | null = null;
+
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        const dbUpdates: any = { updated_at: now };
+        if (updates.fullName !== undefined) dbUpdates.full_name = updates.fullName;
+        if (updates.birthDate !== undefined) dbUpdates.birth_date = updates.birthDate;
+        if (updates.sex !== undefined) dbUpdates.sex = updates.sex;
+        if (updates.heightCm !== undefined) dbUpdates.height_cm = updates.heightCm;
+        if (updates.phoneWhatsapp !== undefined) dbUpdates.phone_whatsapp = updates.phoneWhatsapp;
+        if (updates.phone !== undefined) dbUpdates.phone = updates.phone;
+        if (updates.email !== undefined) dbUpdates.email = updates.email;
+        if (updates.clinicalFlags !== undefined) dbUpdates.clinical_flags = updates.clinicalFlags;
+        if (updates.allergies !== undefined) dbUpdates.allergies = updates.allergies;
+        if (updates.notes !== undefined) dbUpdates.notes = updates.notes;
+        if (updates.isActive !== undefined) dbUpdates.is_active = updates.isActive;
+
+        const { data, error } = await supabase
+          .from('clients')
+          .update(dbUpdates)
+          .eq('id', id)
+          .select('*')
+          .maybeSingle();
+
+        if (!error && data) {
+          updated = this.mapClientFromDb(data);
+        }
+      } catch (e) {
+        console.warn('Supabase client update failed:', e);
+      }
+    }
+
+    const store = getStore();
+    const existing = store.clients.get(id);
+    if (existing) {
+      const merged = { ...existing, ...updates, updatedAt: now };
+      store.clients.set(id, merged);
+      if (!updated) updated = merged;
+    }
+
+    return updated;
+  }
+
+  static async deleteClient(id: string): Promise<boolean> {
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        const { error } = await supabase.from('clients').delete().eq('id', id);
+        if (error) console.warn('Supabase client delete error:', error);
+      } catch (e) {
+        console.warn('Supabase client delete failed:', e);
+      }
+    }
+    const store = getStore();
+    store.clients.delete(id);
+    store.biometrics.delete(id);
+    store.plans.delete(id);
+    return true;
+  }
+
+  // ==========================================================================
+  // BIOMETRIC LOGS
+  // ==========================================================================
   static async getBiometricLogs(clientId: string): Promise<BiometricLog[]> {
     if (this.isSupabaseConfigured()) {
       try {
@@ -375,14 +408,14 @@ export class NutritionRepository {
           return data.map(this.mapBiometricFromDb);
         }
       } catch (e) {
-        console.warn('Supabase query failed, using local store:', e);
+        console.warn('Supabase biometric query failed, using memory:', e);
       }
     }
     const store = getStore();
     return store.biometrics.get(clientId) || [];
   }
 
-  static async addBiometricLog(data: Omit<BiometricLog, 'id' | 'createdAt'>): Promise<BiometricLog> {
+  static async createBiometricLog(data: Omit<BiometricLog, 'id' | 'createdAt'>): Promise<BiometricLog> {
     const id = crypto.randomUUID();
     const now = new Date().toISOString();
     const newLog: BiometricLog = {
@@ -394,7 +427,7 @@ export class NutritionRepository {
     if (this.isSupabaseConfigured()) {
       try {
         const supabase = createAdminSupabaseClient();
-        await supabase.from('biometric_logs').insert({
+        const { error } = await supabase.from('biometric_logs').insert({
           id,
           client_id: newLog.clientId,
           recorded_at: newLog.recordedAt,
@@ -411,21 +444,49 @@ export class NutritionRepository {
           training_days: newLog.trainingDays,
           equipment_available: newLog.equipmentAvailable,
           notes: newLog.notes,
+          created_at: now,
         });
+        if (error) console.warn('Supabase biometric insert error:', error);
       } catch (e) {
-        console.warn('Supabase insert failed, saving to local store:', e);
+        console.warn('Supabase biometric insert failed:', e);
       }
     }
 
     const store = getStore();
-    const logs = store.biometrics.get(data.clientId) || [];
-    logs.push(newLog);
-    store.biometrics.set(data.clientId, logs);
+    const list = store.biometrics.get(newLog.clientId) || [];
+    list.push(newLog);
+    store.biometrics.set(newLog.clientId, list);
     return newLog;
   }
 
-  // --- PLANS ---
-  static async getActivePlan(clientId: string): Promise<NutritionalPlan | null> {
+  static async addBiometricLog(data: Omit<BiometricLog, 'id' | 'createdAt'>): Promise<BiometricLog> {
+    return this.createBiometricLog(data);
+  }
+
+  static async deleteBiometricLog(logId: string): Promise<boolean> {
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        await supabase.from('biometric_logs').delete().eq('id', logId);
+      } catch (e) {
+        console.warn('Supabase biometric delete failed:', e);
+      }
+    }
+    const store = getStore();
+    for (const [clientId, logs] of store.biometrics.entries()) {
+      const filtered = logs.filter((l) => l.id !== logId);
+      if (filtered.length !== logs.length) {
+        store.biometrics.set(clientId, filtered);
+        return true;
+      }
+    }
+    return true;
+  }
+
+  // ==========================================================================
+  // PLANS
+  // ==========================================================================
+  static async getPlans(clientId: string): Promise<NutritionalPlan[]> {
     if (this.isSupabaseConfigured()) {
       try {
         const supabase = createAdminSupabaseClient();
@@ -433,64 +494,136 @@ export class NutritionRepository {
           .from('plans')
           .select('*')
           .eq('client_id', clientId)
-          .eq('is_published', true)
+          .order('created_at', { ascending: false });
+        if (!error && data) {
+          return data.map(this.mapPlanFromDb);
+        }
+      } catch (e) {
+        console.warn('Supabase getPlans error, fallback to memory:', e);
+      }
+    }
+    const store = getStore();
+    return store.plans.get(clientId) || [];
+  }
+
+  static async getCurrentPlan(clientId: string): Promise<NutritionalPlan | null> {
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        const { data, error } = await supabase
+          .from('plans')
+          .select('*')
+          .eq('client_id', clientId)
+          .eq('is_current', true)
           .order('created_at', { ascending: false })
           .limit(1)
-          .single();
+          .maybeSingle();
         if (!error && data) {
           return this.mapPlanFromDb(data);
         }
       } catch (e) {
-        console.warn('Supabase query failed, using local store:', e);
+        console.warn('Supabase getCurrentPlan error:', e);
       }
     }
     const store = getStore();
-    return store.plans.get(clientId) || null;
+    const plans = store.plans.get(clientId) || [];
+    return plans.find((p) => p.isPublished) || plans[0] || null;
   }
 
-  static async savePlan(plan: NutritionalPlan): Promise<NutritionalPlan> {
+  static async getActivePlan(clientId: string): Promise<NutritionalPlan | null> {
+    return this.getCurrentPlan(clientId);
+  }
+
+  static async getPlanById(id: string): Promise<NutritionalPlan | null> {
     if (this.isSupabaseConfigured()) {
       try {
         const supabase = createAdminSupabaseClient();
-        await supabase.from('plans').upsert({
-          id: plan.id,
-          client_id: plan.clientId,
-          biometric_log_id: plan.biometricLogId,
-          formula_used: plan.formulaUsed,
-          lbm_kg: plan.lbmKg,
-          tmb_kcal: plan.tmbKcal,
-          getd_kcal: plan.getdKcal,
-          goal: plan.goal,
-          goal_adjustment_pct: plan.goalAdjustmentPct,
-          target_kcal: plan.targetKcal,
-          caloric_floor_min: plan.caloricFloorMin,
-          caloric_floor_override: plan.caloricFloorOverride,
-          bmi: plan.bmi,
-          is_obese: plan.isObese,
-          adjusted_weight_kg: plan.adjustedWeightKg,
-          protein_g: plan.proteinG,
-          protein_ratio_g_kg: plan.proteinRatioGKg,
-          fat_g: plan.fatG,
-          fat_ratio_g_kg: plan.fatRatioGKg,
-          carbs_g: plan.carbsG,
-          meal_count: plan.mealCount,
-          meal_structure: plan.mealStructure,
-          workout_split: plan.workoutSplit,
-          workout_structure: plan.workoutStructure,
-          clinical_alert_notes: plan.clinicalAlertNotes,
-          is_published: plan.isPublished,
-        });
+        const { data, error } = await supabase
+          .from('plans')
+          .select('*')
+          .eq('id', id)
+          .maybeSingle();
+        if (!error && data) {
+          return this.mapPlanFromDb(data);
+        }
       } catch (e) {
-        console.warn('Supabase save plan failed, saving to local store:', e);
+        console.warn('Supabase getPlanById error:', e);
+      }
+    }
+    const store = getStore();
+    for (const plans of store.plans.values()) {
+      const match = plans.find((p) => p.id === id);
+      if (match) return match;
+    }
+    return null;
+  }
+
+  static async savePlan(planData: Omit<NutritionalPlan, 'id' | 'createdAt'>): Promise<NutritionalPlan> {
+    const id = crypto.randomUUID();
+    const now = new Date().toISOString();
+    const newPlan: NutritionalPlan = {
+      ...planData,
+      id,
+      createdAt: now,
+    };
+
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        // Mark previous plans for this client as is_current = false
+        await supabase
+          .from('plans')
+          .update({ is_current: false })
+          .eq('client_id', newPlan.clientId);
+
+        const { error } = await supabase.from('plans').insert({
+          id,
+          client_id: newPlan.clientId,
+          biometric_log_id: newPlan.biometricLogId,
+          formula_used: newPlan.formulaUsed,
+          lbm_kg: newPlan.lbmKg,
+          tmb_kcal: newPlan.tmbKcal,
+          getd_kcal: newPlan.getdKcal,
+          goal: newPlan.goal,
+          goal_adjustment_pct: newPlan.goalAdjustmentPct,
+          target_kcal: newPlan.targetKcal,
+          caloric_floor_min: newPlan.caloricFloorMin,
+          caloric_floor_override: newPlan.caloricFloorOverride,
+          bmi: newPlan.bmi,
+          is_obese: newPlan.isObese,
+          adjusted_weight_kg: newPlan.adjustedWeightKg,
+          protein_g: newPlan.proteinG,
+          protein_ratio_g_kg: newPlan.proteinRatioGKg,
+          fat_g: newPlan.fatG,
+          fat_ratio_g_kg: newPlan.fatRatioGKg,
+          carbs_g: newPlan.carbsG,
+          meal_count: newPlan.mealCount,
+          meal_structure: newPlan.mealStructure,
+          workout_split: newPlan.workoutSplit,
+          workout_structure: newPlan.workoutStructure,
+          clinical_alert_notes: newPlan.clinicalAlertNotes,
+          is_published: newPlan.isPublished,
+          is_current: true,
+          created_at: now,
+        });
+
+        if (error) console.warn('Supabase savePlan error:', error);
+      } catch (e) {
+        console.warn('Supabase savePlan failed:', e);
       }
     }
 
     const store = getStore();
-    store.plans.set(plan.clientId, plan);
-    return plan;
+    const clientPlans = store.plans.get(newPlan.clientId) || [];
+    clientPlans.unshift(newPlan);
+    store.plans.set(newPlan.clientId, clientPlans);
+
+    return newPlan;
   }
 
-  // --- PERMALINKS ---
+  // ==========================================================================
+  // PERMALINKS
+  // ==========================================================================
   static async getPermalinkBySlug(slug: string): Promise<PermalinkRecord | null> {
     if (this.isSupabaseConfigured()) {
       try {
@@ -499,12 +632,12 @@ export class NutritionRepository {
           .from('permalinks')
           .select('*')
           .eq('slug_token', slug)
-          .single();
+          .maybeSingle();
         if (!error && data) {
           return this.mapPermalinkFromDb(data);
         }
       } catch (e) {
-        console.warn('Supabase query failed, using local store:', e);
+        console.warn('Supabase getPermalinkBySlug error:', e);
       }
     }
     const store = getStore();
@@ -519,46 +652,74 @@ export class NutritionRepository {
           .from('permalinks')
           .select('*')
           .eq('client_id', clientId)
-          .single();
+          .maybeSingle();
         if (!error && data) {
           return this.mapPermalinkFromDb(data);
         }
       } catch (e) {
-        console.warn('Supabase query failed, using local store:', e);
+        console.warn('Supabase getPermalinkByClientId error:', e);
       }
     }
     const store = getStore();
     for (const record of store.permalinks.values()) {
-      if (record.clientId === clientId) {
-        return record;
-      }
+      if (record.clientId === clientId) return record;
     }
     return null;
   }
 
-  static async createOrUpdatePermalink(params: {
-    clientId: string;
-    pin: string;
-    slugToken?: string;
-    currentPlanId?: string;
-  }): Promise<PermalinkRecord> {
-    const existing = await this.getPermalinkByClientId(params.clientId);
-    const slug = params.slugToken || existing?.slugToken || crypto.randomUUID().slice(0, 12).replace(/-/g, '');
+  static async createOrUpdatePermalink(
+    paramsOrClientId:
+      | string
+      | {
+          clientId: string;
+          pin?: string;
+          slugToken?: string;
+          currentPlanId?: string | null;
+          isActive?: boolean;
+          expiresAt?: string | null;
+        },
+    argSlug?: string,
+    argPin?: string,
+    argPlanId?: string | null
+  ): Promise<PermalinkRecord> {
+    let clientId: string;
+    let slugToken: string;
+    let plainPin: string;
+    let currentPlanId: string | null | undefined;
+    let isActive: boolean | undefined;
+    let expiresAt: string | null | undefined;
+
+    if (typeof paramsOrClientId === 'object') {
+      clientId = paramsOrClientId.clientId;
+      plainPin = paramsOrClientId.pin || 'NUT-482';
+      slugToken = paramsOrClientId.slugToken || nanoid(12);
+      currentPlanId = paramsOrClientId.currentPlanId;
+      isActive = paramsOrClientId.isActive;
+      expiresAt = paramsOrClientId.expiresAt;
+    } else {
+      clientId = paramsOrClientId;
+      slugToken = argSlug || nanoid(12);
+      plainPin = argPin || 'NUT-482';
+      currentPlanId = argPlanId;
+    }
+
+    const existing = await this.getPermalinkByClientId(clientId);
     const now = new Date().toISOString();
-    const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
-    const pinClean = params.pin.trim().toUpperCase();
+    const pin = plainPin || existing?.passwordHintAdmin || 'NUT-482';
+    const pinHash = hashPin(pin);
+    const finalSlug = existing ? existing.slugToken : (slugToken || nanoid(12));
 
     const record: PermalinkRecord = {
-      id: existing?.id || crypto.randomUUID(),
-      clientId: params.clientId,
-      currentPlanId: params.currentPlanId || existing?.currentPlanId || null,
-      slugToken: slug,
-      passwordHash: hashPin(pinClean),
-      passwordHintAdmin: pinClean,
-      isActive: existing ? existing.isActive : true,
-      expiresAt: existing?.expiresAt || expiresAt,
+      id: existing ? existing.id : crypto.randomUUID(),
+      clientId,
+      currentPlanId: currentPlanId !== undefined ? currentPlanId : (existing?.currentPlanId || null),
+      slugToken: finalSlug,
+      passwordHash: pinHash,
+      passwordHintAdmin: pin,
+      isActive: isActive !== undefined ? isActive : (existing ? existing.isActive : true),
+      expiresAt: expiresAt !== undefined ? expiresAt : (existing?.expiresAt || null),
       lastAccessedAt: existing?.lastAccessedAt || null,
-      accessCount: existing ? existing.accessCount : 0,
+      accessCount: existing?.accessCount || 0,
       createdAt: existing ? existing.createdAt : now,
       updatedAt: now,
     };
@@ -566,49 +727,115 @@ export class NutritionRepository {
     if (this.isSupabaseConfigured()) {
       try {
         const supabase = createAdminSupabaseClient();
-        await supabase.from('permalinks').upsert({
-          id: record.id,
-          client_id: record.clientId,
-          current_plan_id: record.currentPlanId,
-          slug_token: record.slugToken,
-          password_hash: record.passwordHash,
-          password_hint_admin: record.passwordHintAdmin,
-          is_active: record.isActive,
-          expires_at: record.expiresAt,
-          access_count: record.accessCount,
-        });
+        const { error } = await supabase.from('permalinks').upsert(
+          {
+            id: record.id,
+            client_id: record.clientId,
+            current_plan_id: record.currentPlanId,
+            slug_token: record.slugToken,
+            password_hash: record.passwordHash,
+            password_hint_admin: record.passwordHintAdmin,
+            is_active: record.isActive,
+            expires_at: record.expiresAt,
+            last_accessed_at: record.lastAccessedAt,
+            access_count: record.accessCount,
+            created_at: record.createdAt,
+            updated_at: now,
+          },
+          { onConflict: 'client_id' }
+        );
+        if (error) console.warn('Supabase permalink upsert error:', error);
       } catch (e) {
         console.warn('Supabase permalink upsert failed:', e);
       }
     }
 
     const store = getStore();
-    store.permalinks.set(slug, record);
+    store.permalinks.set(record.slugToken, record);
     return record;
   }
 
-  static async togglePermalinkActive(slug: string, isActive: boolean): Promise<boolean> {
-    const store = getStore();
-    const record = store.permalinks.get(slug);
+  static async updatePermalinkStatus(slug: string, isActive: boolean): Promise<boolean> {
+    const record = await this.getPermalinkBySlug(slug);
+    if (!record) return false;
 
+    const now = new Date().toISOString();
     if (this.isSupabaseConfigured()) {
       try {
         const supabase = createAdminSupabaseClient();
         await supabase
           .from('permalinks')
-          .update({ is_active: isActive, updated_at: new Date().toISOString() })
+          .update({ is_active: isActive, updated_at: now })
           .eq('slug_token', slug);
       } catch (e) {
         console.warn('Supabase toggle failed:', e);
       }
     }
 
-    if (record) {
-      record.isActive = isActive;
-      record.updatedAt = new Date().toISOString();
-      return true;
+    record.isActive = isActive;
+    record.updatedAt = now;
+    const store = getStore();
+    store.permalinks.set(slug, record);
+    return true;
+  }
+
+  static async togglePermalinkActive(slug: string, isActive: boolean): Promise<boolean> {
+    return this.updatePermalinkStatus(slug, isActive);
+  }
+
+  static async updatePermalinkPin(slug: string, newPin: string): Promise<boolean> {
+    const record = await this.getPermalinkBySlug(slug);
+    if (!record) return false;
+
+    const now = new Date().toISOString();
+    const newHash = hashPin(newPin);
+
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        await supabase
+          .from('permalinks')
+          .update({
+            password_hash: newHash,
+            password_hint_admin: newPin,
+            updated_at: now,
+          })
+          .eq('slug_token', slug);
+      } catch (e) {
+        console.warn('Supabase PIN update failed:', e);
+      }
     }
-    return false;
+
+    record.passwordHash = newHash;
+    record.passwordHintAdmin = newPin;
+    record.updatedAt = now;
+    const store = getStore();
+    store.permalinks.set(slug, record);
+    return true;
+  }
+
+  static async updatePermalinkExpiration(slug: string, expiresAt: string | null): Promise<boolean> {
+    const record = await this.getPermalinkBySlug(slug);
+    if (!record) return false;
+
+    const now = new Date().toISOString();
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        await supabase
+          .from('permalinks')
+          .update({ expires_at: expiresAt, updated_at: now })
+          .eq('slug_token', slug);
+      } catch (e) {
+        console.warn('Supabase expiration update failed:', e);
+      }
+    }
+
+    record.expiresAt = expiresAt;
+    record.updatedAt = now;
+    const store = getStore();
+    store.permalinks.set(slug, record);
+    return true;
   }
 
   static async incrementPermalinkAccess(slug: string): Promise<void> {
@@ -634,12 +861,463 @@ export class NutritionRepository {
             .eq('slug_token', slug);
         }
       } catch {
-        // Fallback or ignore if Supabase unavailable
+        // Ignored fallback
       }
     }
   }
 
-  // --- DB MAPPERS ---
+  // ==========================================================================
+  // FOOD CATALOG
+  // ==========================================================================
+  static async getFoodCatalog(filters?: {
+    group?: string;
+    excludeAllergens?: AllergenTag[];
+    search?: string;
+  }): Promise<FoodCatalogItem[]> {
+    let items: FoodCatalogItem[] = [];
+
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        let query = supabase.from('food_catalog').select('*').eq('is_active', true);
+        if (filters?.group && filters.group !== 'all') {
+          query = query.eq('smae_group', filters.group);
+        }
+        if (filters?.search) {
+          query = query.ilike('name', `%${filters.search}%`);
+        }
+        const { data, error } = await query.order('name', { ascending: true });
+        if (!error && data && data.length > 0) {
+          items = data.map(this.mapFoodFromDb);
+        }
+      } catch (e) {
+        console.warn('Supabase food catalog query failed:', e);
+      }
+    }
+
+    if (items.length === 0) {
+      // Fallback from DEFAULT_FOOD_CATALOG
+      items = DEFAULT_FOOD_CATALOG.map((f) => ({
+        id: f.id,
+        name: f.name,
+        smaeGroup: f.group,
+        portionQty: f.portionQty,
+        portionUnit: f.portionUnit,
+        gramsNet: f.gramsNet,
+        kcal: f.group === 'aoa' ? 40 : f.group === 'cereals' ? 70 : f.group === 'legumes' ? 120 : f.group === 'vegetables' ? 25 : f.group === 'fruits' ? 60 : f.group === 'fats' ? 45 : 95,
+        proteinG: f.group === 'aoa' ? 7 : f.group === 'cereals' ? 2 : f.group === 'legumes' ? 8 : f.group === 'vegetables' ? 2 : f.group === 'fruits' ? 0 : f.group === 'fats' ? 0 : 9,
+        fatG: f.group === 'fats' ? 5 : f.group === 'aoa' ? 1 : 0,
+        carbsG: f.group === 'cereals' ? 15 : f.group === 'legumes' ? 20 : f.group === 'fruits' ? 15 : f.group === 'vegetables' ? 4 : 0,
+        allergenTags: f.allergens,
+        isActive: true,
+      }));
+
+      if (filters?.group && filters.group !== 'all') {
+        items = items.filter((i) => i.smaeGroup === filters.group);
+      }
+      if (filters?.search) {
+        const q = filters.search.toLowerCase();
+        items = items.filter((i) => i.name.toLowerCase().includes(q));
+      }
+    }
+
+    if (filters?.excludeAllergens && filters.excludeAllergens.length > 0) {
+      items = items.filter(
+        (food) => !food.allergenTags.some((tag) => filters.excludeAllergens!.includes(tag))
+      );
+    }
+
+    return items;
+  }
+
+  static async createFoodItem(data: Omit<FoodCatalogItem, 'id' | 'createdAt'>): Promise<FoodCatalogItem> {
+    const id = crypto.randomUUID();
+    const now = new Date().toISOString();
+    const newItem: FoodCatalogItem = { ...data, id, isActive: true, createdAt: now };
+
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        await supabase.from('food_catalog').insert({
+          id,
+          name: newItem.name,
+          smae_group: newItem.smaeGroup,
+          portion_qty: newItem.portionQty,
+          portion_unit: newItem.portionUnit,
+          grams_net: newItem.gramsNet,
+          kcal: newItem.kcal,
+          protein_g: newItem.proteinG,
+          fat_g: newItem.fatG,
+          carbs_g: newItem.carbsG,
+          allergen_tags: newItem.allergenTags,
+          is_active: true,
+          created_at: now,
+        });
+      } catch (e) {
+        console.warn('Supabase food insert failed:', e);
+      }
+    }
+
+    const store = getStore();
+    store.foodCatalog.set(id, newItem);
+    return newItem;
+  }
+
+  static async updateFoodItem(id: string, updates: Partial<FoodCatalogItem>): Promise<FoodCatalogItem | null> {
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        const dbUpdates: any = {};
+        if (updates.name !== undefined) dbUpdates.name = updates.name;
+        if (updates.smaeGroup !== undefined) dbUpdates.smae_group = updates.smaeGroup;
+        if (updates.portionQty !== undefined) dbUpdates.portion_qty = updates.portionQty;
+        if (updates.portionUnit !== undefined) dbUpdates.portion_unit = updates.portionUnit;
+        if (updates.gramsNet !== undefined) dbUpdates.grams_net = updates.gramsNet;
+        if (updates.kcal !== undefined) dbUpdates.kcal = updates.kcal;
+        if (updates.proteinG !== undefined) dbUpdates.protein_g = updates.proteinG;
+        if (updates.fatG !== undefined) dbUpdates.fat_g = updates.fatG;
+        if (updates.carbsG !== undefined) dbUpdates.carbs_g = updates.carbsG;
+        if (updates.allergenTags !== undefined) dbUpdates.allergen_tags = updates.allergenTags;
+        if (updates.isActive !== undefined) dbUpdates.is_active = updates.isActive;
+
+        const { data, error } = await supabase
+          .from('food_catalog')
+          .update(dbUpdates)
+          .eq('id', id)
+          .select('*')
+          .maybeSingle();
+
+        if (!error && data) {
+          return this.mapFoodFromDb(data);
+        }
+      } catch (e) {
+        console.warn('Supabase food update failed:', e);
+      }
+    }
+
+    const store = getStore();
+    const existing = store.foodCatalog.get(id);
+    if (existing) {
+      const merged = { ...existing, ...updates };
+      store.foodCatalog.set(id, merged);
+      return merged;
+    }
+    return null;
+  }
+
+  static async deleteFoodItem(id: string): Promise<boolean> {
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        await supabase.from('food_catalog').delete().eq('id', id);
+      } catch (e) {
+        console.warn('Supabase food delete failed:', e);
+      }
+    }
+    const store = getStore();
+    store.foodCatalog.delete(id);
+    return true;
+  }
+
+  // ==========================================================================
+  // EXERCISE CATALOG
+  // ==========================================================================
+  static async getExerciseCatalog(filters?: {
+    pattern?: string;
+    equipment?: string;
+    excludeJointStress?: string[];
+    search?: string;
+  }): Promise<ExerciseCatalogItem[]> {
+    let items: ExerciseCatalogItem[] = [];
+
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        let query = supabase.from('exercise_catalog').select('*').eq('is_active', true);
+        if (filters?.pattern && filters.pattern !== 'all') {
+          query = query.eq('movement_pattern', filters.pattern);
+        }
+        if (filters?.equipment && filters.equipment !== 'all') {
+          query = query.eq('equipment_required', filters.equipment);
+        }
+        if (filters?.search) {
+          query = query.ilike('name', `%${filters.search}%`);
+        }
+        const { data, error } = await query.order('name', { ascending: true });
+        if (!error && data && data.length > 0) {
+          items = data.map(this.mapExerciseFromDb);
+        }
+      } catch (e) {
+        console.warn('Supabase exercise query failed:', e);
+      }
+    }
+
+    if (items.length === 0) {
+      items = EXERCISE_DATABASE.map((ex) => ({
+        id: ex.id,
+        name: ex.name,
+        movementPattern: ex.movementPattern,
+        primaryMuscle: 'Cadena muscular principal',
+        equipmentRequired: ex.equipmentRequired,
+        difficulty: 'intermediate',
+        jointStressTags: ex.jointStressTags as any,
+        defaultSets: ex.defaultSets,
+        defaultReps: ex.defaultReps,
+        defaultRestSec: ex.defaultRestSec,
+        instructions: ex.instructions,
+        isActive: true,
+      }));
+
+      if (filters?.pattern && filters.pattern !== 'all') {
+        items = items.filter((i) => i.movementPattern === filters.pattern);
+      }
+      if (filters?.equipment && filters.equipment !== 'all') {
+        items = items.filter((i) => i.equipmentRequired === filters.equipment);
+      }
+      if (filters?.search) {
+        const q = filters.search.toLowerCase();
+        items = items.filter((i) => i.name.toLowerCase().includes(q));
+      }
+    }
+
+    if (filters?.excludeJointStress && filters.excludeJointStress.length > 0) {
+      items = items.filter(
+        (ex) => !ex.jointStressTags.some((tag) => filters.excludeJointStress!.includes(tag))
+      );
+    }
+
+    return items;
+  }
+
+  static async createExerciseItem(data: Omit<ExerciseCatalogItem, 'id' | 'createdAt'>): Promise<ExerciseCatalogItem> {
+    const id = crypto.randomUUID();
+    const now = new Date().toISOString();
+    const newItem: ExerciseCatalogItem = { ...data, id, isActive: true, createdAt: now };
+
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        await supabase.from('exercise_catalog').insert({
+          id,
+          name: newItem.name,
+          movement_pattern: newItem.movementPattern,
+          primary_muscle: newItem.primaryMuscle,
+          equipment_required: newItem.equipmentRequired,
+          difficulty: newItem.difficulty,
+          joint_stress_tags: newItem.jointStressTags,
+          default_sets: newItem.defaultSets,
+          default_reps: newItem.defaultReps,
+          default_rest_sec: newItem.defaultRestSec,
+          instructions: newItem.instructions,
+          video_url: newItem.videoUrl,
+          is_active: true,
+          created_at: now,
+        });
+      } catch (e) {
+        console.warn('Supabase exercise insert failed:', e);
+      }
+    }
+
+    const store = getStore();
+    store.exerciseCatalog.set(id, newItem);
+    return newItem;
+  }
+
+  static async updateExerciseItem(id: string, updates: Partial<ExerciseCatalogItem>): Promise<ExerciseCatalogItem | null> {
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        const dbUpdates: any = {};
+        if (updates.name !== undefined) dbUpdates.name = updates.name;
+        if (updates.movementPattern !== undefined) dbUpdates.movement_pattern = updates.movementPattern;
+        if (updates.primaryMuscle !== undefined) dbUpdates.primary_muscle = updates.primaryMuscle;
+        if (updates.equipmentRequired !== undefined) dbUpdates.equipment_required = updates.equipmentRequired;
+        if (updates.difficulty !== undefined) dbUpdates.difficulty = updates.difficulty;
+        if (updates.jointStressTags !== undefined) dbUpdates.joint_stress_tags = updates.jointStressTags;
+        if (updates.defaultSets !== undefined) dbUpdates.default_sets = updates.defaultSets;
+        if (updates.defaultReps !== undefined) dbUpdates.default_reps = updates.defaultReps;
+        if (updates.defaultRestSec !== undefined) dbUpdates.default_rest_sec = updates.defaultRestSec;
+        if (updates.instructions !== undefined) dbUpdates.instructions = updates.instructions;
+        if (updates.videoUrl !== undefined) dbUpdates.video_url = updates.videoUrl;
+        if (updates.isActive !== undefined) dbUpdates.is_active = updates.isActive;
+
+        const { data, error } = await supabase
+          .from('exercise_catalog')
+          .update(dbUpdates)
+          .eq('id', id)
+          .select('*')
+          .maybeSingle();
+
+        if (!error && data) {
+          return this.mapExerciseFromDb(data);
+        }
+      } catch (e) {
+        console.warn('Supabase exercise update failed:', e);
+      }
+    }
+
+    const store = getStore();
+    const existing = store.exerciseCatalog.get(id);
+    if (existing) {
+      const merged = { ...existing, ...updates };
+      store.exerciseCatalog.set(id, merged);
+      return merged;
+    }
+    return null;
+  }
+
+  static async deleteExerciseItem(id: string): Promise<boolean> {
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        await supabase.from('exercise_catalog').delete().eq('id', id);
+      } catch (e) {
+        console.warn('Supabase exercise delete failed:', e);
+      }
+    }
+    const store = getStore();
+    store.exerciseCatalog.delete(id);
+    return true;
+  }
+
+  // ==========================================================================
+  // SEED & METRICS
+  // ==========================================================================
+  static async seedCatalogsIfNeeded(force: boolean = false): Promise<{ foodsCount: number; exercisesCount: number }> {
+    if (!this.isSupabaseConfigured()) {
+      return { foodsCount: 0, exercisesCount: 0 };
+    }
+
+    const supabase = createAdminSupabaseClient();
+
+    // Check foods
+    const { count: foodCount } = await supabase
+      .from('food_catalog')
+      .select('*', { count: 'exact', head: true });
+
+    let insertedFoods = 0;
+    if (force || !foodCount || foodCount === 0) {
+      const foodsToInsert = DEFAULT_FOOD_CATALOG.map((f) => ({
+        name: f.name,
+        smae_group: f.group,
+        portion_qty: f.portionQty,
+        portion_unit: f.portionUnit,
+        grams_net: f.gramsNet,
+        kcal: f.group === 'aoa' ? 40 : f.group === 'cereals' ? 70 : f.group === 'legumes' ? 120 : f.group === 'vegetables' ? 25 : f.group === 'fruits' ? 60 : f.group === 'fats' ? 45 : 95,
+        protein_g: f.group === 'aoa' ? 7 : f.group === 'cereals' ? 2 : f.group === 'legumes' ? 8 : f.group === 'vegetables' ? 2 : f.group === 'fruits' ? 0 : f.group === 'fats' ? 0 : 9,
+        fat_g: f.group === 'fats' ? 5 : f.group === 'aoa' ? 1 : 0,
+        carbs_g: f.group === 'cereals' ? 15 : f.group === 'legumes' ? 20 : f.group === 'fruits' ? 15 : f.group === 'vegetables' ? 4 : 0,
+        allergen_tags: f.allergens,
+        is_active: true,
+      }));
+
+      const { data } = await supabase.from('food_catalog').insert(foodsToInsert).select();
+      insertedFoods = data?.length || foodsToInsert.length;
+    }
+
+    // Check exercises
+    const { count: exCount } = await supabase
+      .from('exercise_catalog')
+      .select('*', { count: 'exact', head: true });
+
+    let insertedExercises = 0;
+    if (force || !exCount || exCount === 0) {
+      const exercisesToInsert = EXERCISE_DATABASE.map((ex) => ({
+        name: ex.name,
+        movement_pattern: ex.movementPattern,
+        primary_muscle: 'Cadena principal',
+        equipment_required: ex.equipmentRequired,
+        difficulty: 'intermediate',
+        joint_stress_tags: ex.jointStressTags,
+        default_sets: ex.defaultSets,
+        default_reps: ex.defaultReps,
+        default_rest_sec: ex.defaultRestSec,
+        instructions: ex.instructions,
+        is_active: true,
+      }));
+
+      const { data } = await supabase.from('exercise_catalog').insert(exercisesToInsert).select();
+      insertedExercises = data?.length || exercisesToInsert.length;
+    }
+
+    return { foodsCount: insertedFoods, exercisesCount: insertedExercises };
+  }
+
+  static async getSystemMetrics(): Promise<{
+    totalClients: number;
+    checkInsThisMonth: number;
+    activePermalinks: number;
+    inactivePermalinks: number;
+    totalFoods: number;
+    totalExercises: number;
+    recentClients: ClientProfile[];
+  }> {
+    const clients = await this.getClients();
+    const activeClients = clients.filter((c) => c.isActive !== false);
+
+    let checkInsThisMonth = 0;
+    let activePermalinks = 0;
+    let inactivePermalinks = 0;
+    let totalFoods = 0;
+    let totalExercises = 0;
+
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+    const startIso = startOfMonth.toISOString();
+
+    if (this.isSupabaseConfigured()) {
+      try {
+        const supabase = createAdminSupabaseClient();
+        const [
+          { count: checkInsCount },
+          { count: activeLinksCount },
+          { count: inactiveLinksCount },
+          { count: foodsCount },
+          { count: exercisesCount },
+        ] = await Promise.all([
+          supabase.from('biometric_logs').select('*', { count: 'exact', head: true }).gte('created_at', startIso),
+          supabase.from('permalinks').select('*', { count: 'exact', head: true }).eq('is_active', true),
+          supabase.from('permalinks').select('*', { count: 'exact', head: true }).eq('is_active', false),
+          supabase.from('food_catalog').select('*', { count: 'exact', head: true }),
+          supabase.from('exercise_catalog').select('*', { count: 'exact', head: true }),
+        ]);
+
+        checkInsThisMonth = checkInsCount || 0;
+        activePermalinks = activeLinksCount || 0;
+        inactivePermalinks = inactiveLinksCount || 0;
+        totalFoods = foodsCount || 0;
+        totalExercises = exercisesCount || 0;
+      } catch (e) {
+        console.warn('Supabase getSystemMetrics error:', e);
+      }
+    }
+
+    // Fallbacks if zero or local store
+    if (totalFoods === 0) totalFoods = DEFAULT_FOOD_CATALOG.length;
+    if (totalExercises === 0) totalExercises = EXERCISE_DATABASE.length;
+    if (activePermalinks === 0 && inactivePermalinks === 0) {
+      const store = getStore();
+      for (const p of store.permalinks.values()) {
+        if (p.isActive) activePermalinks++;
+        else inactivePermalinks++;
+      }
+    }
+
+    return {
+      totalClients: activeClients.length,
+      checkInsThisMonth,
+      activePermalinks,
+      inactivePermalinks,
+      totalFoods,
+      totalExercises,
+      recentClients: clients.slice(0, 5),
+    };
+  }
+
+  // ==========================================================================
+  // DB MAPPERS
+  // ==========================================================================
   private static mapClientFromDb(row: any): ClientProfile {
     return {
       id: row.id,
@@ -647,11 +1325,13 @@ export class NutritionRepository {
       birthDate: row.birth_date,
       sex: row.sex,
       heightCm: Number(row.height_cm),
-      phoneWhatsapp: row.phone_whatsapp,
+      phoneWhatsapp: row.phone_whatsapp || row.phone,
+      phone: row.phone || row.phone_whatsapp,
       email: row.email,
       clinicalFlags: row.clinical_flags || [],
       allergies: row.allergies || [],
       notes: row.notes,
+      isActive: row.is_active !== undefined ? Boolean(row.is_active) : true,
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     };
@@ -726,6 +1406,43 @@ export class NutritionRepository {
       accessCount: Number(row.access_count),
       createdAt: row.created_at,
       updatedAt: row.updated_at,
+    };
+  }
+
+  private static mapFoodFromDb(row: any): FoodCatalogItem {
+    return {
+      id: row.id,
+      name: row.name,
+      smaeGroup: row.smae_group,
+      portionQty: Number(row.portion_qty),
+      portionUnit: row.portion_unit,
+      gramsNet: Number(row.grams_net),
+      kcal: Number(row.kcal),
+      proteinG: Number(row.protein_g),
+      fatG: Number(row.fat_g),
+      carbsG: Number(row.carbs_g),
+      allergenTags: row.allergen_tags || [],
+      isActive: row.is_active !== undefined ? Boolean(row.is_active) : true,
+      createdAt: row.created_at,
+    };
+  }
+
+  private static mapExerciseFromDb(row: any): ExerciseCatalogItem {
+    return {
+      id: row.id,
+      name: row.name,
+      movementPattern: row.movement_pattern,
+      primaryMuscle: row.primary_muscle || 'General',
+      equipmentRequired: row.equipment_required,
+      difficulty: row.difficulty || 'intermediate',
+      jointStressTags: row.joint_stress_tags || [],
+      defaultSets: Number(row.default_sets || 3),
+      defaultReps: String(row.default_reps || '10-12'),
+      defaultRestSec: Number(row.default_rest_sec || 90),
+      instructions: row.instructions,
+      videoUrl: row.video_url,
+      isActive: row.is_active !== undefined ? Boolean(row.is_active) : true,
+      createdAt: row.created_at,
     };
   }
 }

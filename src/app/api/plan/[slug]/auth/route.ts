@@ -40,10 +40,11 @@ export async function POST(
     );
   }
 
-  // 3. Check if permalink is active
-  if (!permalink.isActive) {
+  // 3. Check if permalink is active and not expired
+  const isExpired = permalink.expiresAt ? new Date(permalink.expiresAt) < new Date() : false;
+  if (!permalink.isActive || isExpired) {
     return NextResponse.json(
-      { error: 'Este enlace de plan nutricional se encuentra inactivo. Contacta a tu especialista para reactivarlo.' },
+      { error: 'Este enlace de plan nutricional se encuentra inactivo o ha expirado. Contacta a tu especialista para renovarlo.' },
       { status: 403 }
     );
   }

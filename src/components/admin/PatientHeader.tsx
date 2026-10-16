@@ -1,13 +1,21 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ClientProfile } from '@/lib/types/clinical';
+import { EditPatientModal } from './EditPatientModal';
 
 interface PatientHeaderProps {
   client: ClientProfile;
   consultationCount: number;
 }
 
-export function PatientHeader({ client, consultationCount }: PatientHeaderProps) {
+export function PatientHeader({ client: initialClient, consultationCount }: PatientHeaderProps) {
+  const router = useRouter();
+  const [client, setClient] = useState<ClientProfile>(initialClient);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
   // Calculate age from birthDate
   const birthYear = new Date(client.birthDate).getFullYear();
   const currentYear = new Date().getFullYear();
@@ -34,11 +42,20 @@ export function PatientHeader({ client, consultationCount }: PatientHeaderProps)
               {client.fullName}
             </h1>
             <span className="bg-surface-container-high text-on-surface-variant text-[11px] font-mono px-2.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">
-              ID: #BIO-9942
+              ID: #{client.id.slice(0, 8)}
             </span>
             <span className="text-[11px] bg-primary/10 text-primary px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
-              <span className="material-symbols-outlined text-[14px]">verified</span> Fase Activa
+              <span className="material-symbols-outlined text-[14px]">verified</span>
+              {client.isActive !== false ? 'Fase Activa' : 'Inactivo'}
             </span>
+            <button
+              onClick={() => setIsEditOpen(true)}
+              className="px-2.5 py-0.5 rounded-lg text-[11px] font-semibold bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center gap-1 transition-colors"
+              title="Editar ficha del paciente"
+            >
+              <span className="material-symbols-outlined text-[14px]">edit</span>
+              <span>Editar Ficha</span>
+            </button>
           </div>
 
           <div className="flex flex-wrap items-center gap-y-1 gap-x-4 text-on-surface-variant text-xs mt-1.5">
@@ -53,6 +70,15 @@ export function PatientHeader({ client, consultationCount }: PatientHeaderProps)
             <span>
               <strong className="text-on-surface font-semibold">Estatura:</strong> {client.heightCm} cm
             </span>
+            {client.phoneWhatsapp && (
+              <>
+                <span className="w-1 h-1 rounded-full bg-outline-variant"></span>
+                <span className="flex items-center gap-1 text-emerald-700 font-medium">
+                  <span className="material-symbols-outlined text-[14px]">chat</span>
+                  {client.phoneWhatsapp}
+                </span>
+              </>
+            )}
             <span className="w-1 h-1 rounded-full bg-outline-variant"></span>
             <span className="flex items-center gap-1 text-primary font-medium">
               <span className="material-symbols-outlined text-[15px]">schedule</span>
@@ -62,22 +88,21 @@ export function PatientHeader({ client, consultationCount }: PatientHeaderProps)
 
           {/* Clinical Flags Badges */}
           <div className="flex flex-wrap items-center gap-2 mt-3">
-            {client.clinicalFlags.includes('diabetes_type_2') && (
-              <span className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-800 text-[11px] font-medium px-2.5 py-1 rounded-full border border-amber-200">
+            {client.clinicalFlags.map((flag) => (
+              <span
+                key={flag}
+                className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-800 text-[11px] font-medium px-2.5 py-1 rounded-full border border-amber-200"
+              >
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                Diabetes Tipo II (Controlada)
+                {flag.replace(/_/g, ' ')}
+              </span>
+            ))}
+            {client.allergies.length > 0 && (
+              <span className="inline-flex items-center gap-1 bg-rose-50 text-rose-800 text-[11px] font-medium px-2.5 py-1 rounded-full border border-rose-200">
+                <span className="material-symbols-outlined text-[13px]">no_food</span>
+                Alergias: {client.allergies.join(', ')}
               </span>
             )}
-            {client.clinicalFlags.includes('knee_injury') && (
-              <span className="inline-flex items-center gap-1.5 bg-surface-container text-secondary text-[11px] font-medium px-2.5 py-1 rounded-full border border-secondary/20">
-                <span className="material-symbols-outlined text-[13px]">healing</span>
-                Lesión tendón rotuliano derecho (Fase remodelación)
-              </span>
-            )}
-            <span className="inline-flex items-center gap-1.5 bg-surface-container-high text-on-surface text-[11px] font-medium px-2.5 py-1 rounded-full">
-              <span className="material-symbols-outlined text-[13px]">tune</span>
-              Objetivo: Recomposición corporal & Déficit seguro
-            </span>
           </div>
         </div>
       </div>
@@ -98,6 +123,19 @@ export function PatientHeader({ client, consultationCount }: PatientHeaderProps)
           <span>Generar Plan con Algoritmo</span>
         </Link>
       </div>
+
+      {isEditOpen && (
+        <EditPatientModal
+          client={client}
+          isOpen={isEditOpen}
+          onClose={() => setIsEditOpen(false)}
+          onUpdated={(updated) => {
+            setClient(updated);
+            setIsEditOpen(false);
+            router.refresh();
+          }}
+        />
+      )}
     </section>
   );
 }
