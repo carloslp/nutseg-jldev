@@ -166,28 +166,53 @@ ALTER TABLE public.exercise_catalog ENABLE ROW LEVEL SECURITY;
 
 -- Políticas para Admin / Usuarios Autenticados
 CREATE POLICY "Admin full access to clients"
-    ON public.clients TO authenticated
+    ON public.clients TO service_role
     USING (true) WITH CHECK (true);
 
 CREATE POLICY "Admin full access to biometric_logs"
-    ON public.biometric_logs TO authenticated
+    ON public.biometric_logs TO service_role
     USING (true) WITH CHECK (true);
 
 CREATE POLICY "Admin full access to plans"
-    ON public.plans TO authenticated
+    ON public.plans TO service_role
     USING (true) WITH CHECK (true);
 
 CREATE POLICY "Admin full access to permalinks"
-    ON public.permalinks TO authenticated
+    ON public.permalinks TO service_role
     USING (true) WITH CHECK (true);
 
 CREATE POLICY "Admin full access to food_catalog"
-    ON public.food_catalog TO authenticated
+    ON public.food_catalog TO service_role
     USING (true) WITH CHECK (true);
 
 CREATE POLICY "Admin full access to exercise_catalog"
-    ON public.exercise_catalog TO authenticated
+    ON public.exercise_catalog TO service_role
     USING (true) WITH CHECK (true);
+
+-- Authenticated read‑only policies
+CREATE POLICY "Authenticated read clients"
+    ON public.clients FOR SELECT TO authenticated
+    USING (true);
+
+CREATE POLICY "Authenticated read biometric_logs"
+    ON public.biometric_logs FOR SELECT TO authenticated
+    USING (true);
+
+CREATE POLICY "Authenticated read plans"
+    ON public.plans FOR SELECT TO authenticated
+    USING (true);
+
+CREATE POLICY "Authenticated read permalinks"
+    ON public.permalinks FOR SELECT TO authenticated
+    USING (true);
+
+CREATE POLICY "Authenticated read food_catalog"
+    ON public.food_catalog FOR SELECT TO authenticated
+    USING (is_active = true);
+
+CREATE POLICY "Authenticated read exercise_catalog"
+    ON public.exercise_catalog FOR SELECT TO authenticated
+    USING (is_active = true);
 
 -- Catálogos de lectura pública (alimentos y ejercicios)
 CREATE POLICY "Public read food_catalog"
@@ -200,12 +225,15 @@ CREATE POLICY "Public read exercise_catalog"
 
 -- Trigger de updated_at para clients y permalinks
 CREATE OR REPLACE FUNCTION public.set_updated_at()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SET search_path = public
+AS $$
 BEGIN
     NEW.updated_at = timezone('utc'::text, now());
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 DROP TRIGGER IF EXISTS tr_clients_updated_at ON public.clients;
 CREATE TRIGGER tr_clients_updated_at
@@ -221,13 +249,17 @@ CREATE TRIGGER tr_permalinks_updated_at
 -- FUNCIÓN RPC: increment_permalink_access (Auditoría segura de accesos)
 -- ----------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.increment_permalink_access(p_slug TEXT)
-RETURNS VOID AS $$
+RETURNS VOID
+LANGUAGE plpgsql
+SET search_path = public
+SECURITY INVOKER
+AS $$
 BEGIN
     UPDATE public.permalinks
     SET access_count = access_count + 1,
         last_accessed_at = timezone('utc'::text, now())
     WHERE slug_token = p_slug;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 GRANT EXECUTE ON FUNCTION public.increment_permalink_access(TEXT) TO anon, authenticated, service_role;

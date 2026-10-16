@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { getClientIp } from '@/lib/network/getClientIp';
 import { NutritionRepository } from '@/lib/db/repository';
 import {
   checkRateLimit,
@@ -13,10 +13,7 @@ export async function POST(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
-  const clientIp =
-    request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-    request.headers.get('x-real-ip') ||
-    '127.0.0.1';
+  const clientIp = getClientIp(request);
 
   // 1. Rate-limiting anti-brute force check
   const rateLimit = checkRateLimit(clientIp);
